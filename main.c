@@ -183,31 +183,52 @@ void defineChessBoardMatrix(wchar_t chessBoard[N][N]) {
         for (j = 0; j < N; j++) {
             if (isPawnPosition(i))
                 chessBoard[i][j] = isBlackPosition(i) ? BLACK_PAWN : getWhiteIcon(BLACK_PAWN);
-            if (isBishopPosition(i, j))
+            else if (isBishopPosition(i, j))
                 chessBoard[i][j] = isBlackPosition(i) ? BLACK_BISHOP : getWhiteIcon(BLACK_BISHOP);
-            if (isHorsePosition(i, j))
+            else if (isHorsePosition(i, j))
                 chessBoard[i][j] = isBlackPosition(i) ? BLACK_HORSE : getWhiteIcon(BLACK_HORSE);
-            if (isTowerPosition(i, j))
+            else if (isTowerPosition(i, j))
                 chessBoard[i][j] = isBlackPosition(i) ? BLACK_TOWER : getWhiteIcon(BLACK_TOWER);
-            if (isKingPosition(i, j))
+            else if (isKingPosition(i, j))
                 chessBoard[i][j] = isBlackPosition(i) ? BLACK_KING : getWhiteIcon(BLACK_KING);
-            if (isQueenPosition(i, j))
+            else if (isQueenPosition(i, j))
                 chessBoard[i][j] = isBlackPosition(i) ? BLACK_QUEEN : getWhiteIcon(BLACK_QUEEN);
-            if (isEmptyPosition(i))
+            else if (isEmptyPosition(i))
                 chessBoard[i][j] = isEmptySquarePosition(i, j) ? EMPTY_SQUARE : FILLED_SQUARE;
         }
     }
 }
 
-void getIconStringName();
+void printIconStringName(wchar_t icon) {
+    if(icon == BLACK_PAWN || icon == getWhiteIcon(BLACK_PAWN))
+        wprintf(L"Pawn.\n");
+    else if(icon == BLACK_HORSE || icon == getWhiteIcon(BLACK_HORSE))
+        wprintf(L"Horse.\n");
+    else if(icon == BLACK_BISHOP || icon == getWhiteIcon(BLACK_BISHOP))
+        wprintf(L"Bishop.\n");
+    else if(icon == BLACK_TOWER || icon == getWhiteIcon(BLACK_TOWER))
+        wprintf(L"Tower.\n");
+    else if(icon == BLACK_KING || icon == getWhiteIcon(BLACK_KING))
+        wprintf(L"King.\n");
+    else if(icon == BLACK_QUEEN || icon == getWhiteIcon(BLACK_QUEEN))
+        wprintf(L"Queen.\n");
+    else if(icon == EMPTY_SQUARE || icon == FILLED_SQUARE)
+        wprintf(L"Empty.\n");
+    else {
+        wprintf(L"Not valid icon !\n");
+        system("exit");
+    }
+}
 
 bool move(wchar_t chessBoard[N][N], int row1, int col1, int row2, int col2) {
     wchar_t temp = chessBoard[row2][col2];
-    if(temp != FILLED_SQUARE && temp != EMPTY_SQUARE)
-        wprintf(L"\nHai mangiato un %lc  %ls dell'avversario!\n", temp, isBlack(chessBoard, row2, col2) ? L"nero" : L"bianco");
+    if(temp != FILLED_SQUARE && temp != EMPTY_SQUARE) {
+        wprintf(L"\nHai mangiato un %lc  %ls dell'avversario ! ; ", temp, isBlack(chessBoard, row2, col2) ? L"nero" : L"bianco");
+        printIconStringName(temp);
+    }
     chessBoard[row2][col2] = chessBoard[row1][col1];
     chessBoard[row1][col1] = isEmptySquarePosition(row1, col1) ? EMPTY_SQUARE : FILLED_SQUARE;
-    return temp == BLACK_QUEEN || temp == getWhiteIcon(BLACK_QUEEN);;
+    return temp == BLACK_QUEEN || temp == getWhiteIcon(BLACK_QUEEN);
 }
 
 int setCoordinate(int x) {
@@ -235,7 +256,8 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
         scanf("%d", & col2);
         row2 = setCoordinate(row2);
         col2 = setCoordinate(col2);
-        wprintf(L"\nPosizione di arrivo: %lc ; (%d, %d)\n", chessBoard[row2][col2], row2, col2);
+        wprintf(L"\nPosizione di arrivo: %lc ; (%d, %d) ; ", chessBoard[row2][col2], row2, col2);
+        printIconStringName(chessBoard[row2][col2]);
         if (isPawn(chessBoard, row1, col1)) {
             if (isBlack(chessBoard, row1, col1)) {
                 if (row1 == N - 2) {
@@ -349,7 +371,44 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                 if(isBishopMovement(row1, col1, row2, col2)) {
                     if(isFreePosition(chessBoard, row2, col2) || !isEqualColor(chessBoard, row1, col1, row2, col2)) {
                         badMove = false;
-                        hasWin = move(chessBoard, row1, col1, row2, col2);
+                        if(row1 > row2 && col1 > col2) {
+                            for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                                //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere nero sx frontale), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2);   
+                        } else if(row1 > row2 && col1 < col2) {
+                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere nero dx alto), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2);  
+                        } else if(row1 < row2 && col1 > col2) {
+                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere nero sx basso), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2); 
+                        } else if(row1 < row2 && col1 < col2) {
+                            for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere nero dx basso), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2);  
+                        }
                     } else {
                         badMove = true;
                         wprintf(L"\nMossa non valida (alfiere nero), riprova.\n");   
@@ -403,7 +462,6 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     } else if(row1 == row2 && col1 > col2) {
                         badMove = false;
                         for(j = col1 - 1; (j >= col2 + 1) && !badMove; j--) {
-                            wprintf(L"\n%lc, %d", chessBoard[row2][j], badMove);
                             if(!isFreePosition(chessBoard, row2, j)) 
                                 badMove = true;
                         }
@@ -414,15 +472,13 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     } else if(row1 == row2 && col1 < col2) {
                         badMove = false;
                         for(j = col1 + 1; (j < col2) && !badMove; j++) {
-                            if(!isFreePosition(chessBoard, row2, j)) {
+                            if(!isFreePosition(chessBoard, row2, j)) 
                                 badMove = true;
-                            }
                         }
-                        if(badMove) {
+                        if(badMove) 
                             wprintf(L"\nMossa non valida (torre nera dx), riprova.\n");
-                        } else {
+                        else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);
-                        }
                     }
                 } else {
                     badMove = true;
@@ -431,7 +487,7 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
             } else {
                 if(isTowerMovement(row1, col1, row2, col2) && !isEqualColor(chessBoard, row1, col1, row2, col2)) {
                     if(row1 > row2 && col1 == col2) {
-                         badMove = false;
+                        badMove = false;
                         for(i = row1 - 1; (i >= row2 + 1) && !badMove; i--) {
                             if(!isFreePosition(chessBoard, i, col2)) 
                                 badMove = true;
@@ -453,7 +509,6 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     } else if(row1 == row2 && col1 > col2) {
                         badMove = false;
                         for(j = col1 - 1; (j >= col2 + 1) && !badMove; j--) {
-                            wprintf(L"\n%lc, %d", chessBoard[row2][j], badMove);
                             if(!isFreePosition(chessBoard, row2, j)) 
                                 badMove = true;
                         }
@@ -464,7 +519,6 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     } else if(row1 == row2 && col1 < col2) {
                         badMove = false;
                         for(j = col1 + 1; (j < col2) && !badMove; j++) {
-                            wprintf(L"\n%lc, %d", chessBoard[row2][j], badMove);
                             if(!isFreePosition(chessBoard, row2, j)) 
                                 badMove = true;
                         }
@@ -483,15 +537,100 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
             if(isBlack(chessBoard, row1, col1)) {
                 if(isKingMovement(row1, col1, row2, col2) && !isEqualColor(chessBoard, row1, col1, row2, col2)) {
                     badMove = false;
-                    hasWin = move(chessBoard, row1, col1, row2, col2);
+                    // su, giù, sx, dx, diag sup-sx, diag inf-sx, diag su-dx, diag inf-dx.
+                    if(row1 > row2 && col1 == col2) {
+                        badMove = false;
+                        for(i = row1 - 1; (i >= row2 + 1) && !badMove; i--) {
+                            if(!isFreePosition(chessBoard, i, col2)) 
+                                badMove = true;
+                        }
+                        if(badMove) 
+                            wprintf(L"\nMossa non valida (Re nero frontale), riprova.\n");
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    } else if(row1 < row2 && col1 == col2) {
+                        // wprintf(L"giu");
+                        badMove = false;
+                        for(i = row1 + 1; (i < row2) && !badMove; i++) {
+                            if(!isFreePosition(chessBoard, i, col2)) {
+                                badMove = true;
+                            }
+                        }
+                        if(badMove) {
+                            wprintf(L"\nMossa non valida (Re nera retro), riprova.\n");
+                        } else {
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                        }
+                    } else if(row1 == row2 && col1 > col2) {
+                        badMove = false;
+                        for(j = col1 - 1; (j >= col2 + 1) && !badMove; j--) {
+                            if(!isFreePosition(chessBoard, row2, j)) 
+                                badMove = true;
+                        }
+                        if(badMove) 
+                            wprintf(L"\nMossa non valida (Re nero sx), riprova.\n");
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    } else if(row1 == row2 && col1 < col2) {
+                        badMove = false;
+                        for(j = col1 + 1; (j < col2) && !badMove; j++) {
+                            if(!isFreePosition(chessBoard, row2, j)) 
+                                badMove = true;
+                        }
+                        if(badMove) 
+                            wprintf(L"\nMossa non valida (Re nero dx), riprova.\n");
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    }
                 } else {
                     badMove = true;
                     wprintf(L"\nMossa non valida (Re nero), riprova.\n");
                 }
             } else {
                 if(isKingMovement(row1, col1, row2, col2) && !isEqualColor(chessBoard, row1, col1, row2, col2)) {
+                    // su, giù, sx, dx, diag sup-sx, diag inf-sx, diag su-dx, diag inf-dx.
                     badMove = false;
-                    hasWin = move(chessBoard, row1, col1, row2, col2);
+                    if(row1 > row2 && col1 == col2) {
+                        badMove = false;
+                        for(i = row1 - 1; (i >= row2 + 1) && !badMove; i--) {
+                            if(!isFreePosition(chessBoard, i, col2)) 
+                                badMove = true;
+                        }
+                        if(badMove) 
+                            wprintf(L"\nMossa non valida (Re bianco giù), riprova.\n");
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    } else if(row1 < row2 && col1 == col2) {
+                        badMove = false;
+                        for(i = row1 + 1; (i < row2) && !badMove; i++) {
+                            if(!isFreePosition(chessBoard, i, col2)) 
+                                badMove = true;
+                        }
+                        if(badMove) {
+                            wprintf(L"\nMossa non valida (Re bianco frontale), riprova.\n");
+                        } else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    } else if(row1 == row2 && col1 > col2) {
+                        badMove = false;
+                        for(j = col1 - 1; (j >= col2 + 1) && !badMove; j--) {
+                            if(!isFreePosition(chessBoard, row2, j)) 
+                                badMove = true;
+                        }
+                        if(badMove) 
+                            wprintf(L"\nMossa non valida (Re bianco dx), riprova.\n");
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    } else if(row1 == row2 && col1 < col2) {
+                        badMove = false;
+                        for(j = col1 + 1; (j < col2) && !badMove; j++) {
+                            if(!isFreePosition(chessBoard, row2, j)) 
+                                badMove = true;
+                        }
+                        if(badMove) 
+                            wprintf(L"\nMossa non valida (Re bianco sx), riprova.\n");
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);
+                    }
                 } else {
                     badMove = true;
                     wprintf(L"\nMossa non valida (Re bianco), riprova.\n");
@@ -534,6 +673,9 @@ int main(void) {
         moveCounter = 0;
     wchar_t chessBoard[N][N];
     defineChessBoardMatrix(chessBoard);
+    chessBoard[3][3] = BLACK_BISHOP;
+    chessBoard[5][1] = getWhiteIcon(BLACK_BISHOP);
+    chessBoard[6][0] = getWhiteIcon(BLACK_BISHOP);
     while(!hasWin) {
         while((player < 2) && !hasWin) {
             do {
@@ -554,11 +696,11 @@ int main(void) {
                 } else if(isFreePosition(chessBoard, row1, col1)) {
                     badMove = true;
                     wprintf(L"\nPosizione vuota, riprova.\n");
-                } else {
+                } else 
                     badMove = false;
-                }
             } while(badMove);
-            wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%d, %d)\n", chessBoard[row1][col1], isBlack(chessBoard, row1, col1) ? L"nero" : L"bianco", row1, col1);
+            wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%d, %d) ; ", chessBoard[row1][col1], isBlack(chessBoard, row1, col1) ? L"nero" : L"bianco", row1, col1);
+            printIconStringName(chessBoard[row1][col1]);
             hasWin = playerTurn(chessBoard, row1, col1);
             moveCounter++;
             if(player == 0)
