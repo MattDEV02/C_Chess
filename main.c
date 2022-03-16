@@ -378,7 +378,7 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                                     badMove = true;
                             } 
                             if(badMove)
-                                wprintf(L"\nMossa non valida (alfiere nero sx frontale), riprova.\n");   
+                                wprintf(L"\nMossa non valida (alfiere nero sx alto), riprova.\n");   
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2);   
                         } else if(row1 > row2 && col1 < col2) {
@@ -421,7 +421,45 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                 if(isBishopMovement(row1, col1, row2, col2)) {
                     if(isFreePosition(chessBoard, row2, col2) || !isEqualColor(chessBoard, row1, col1, row2, col2)) {
                         badMove = false;
-                        hasWin = move(chessBoard, row1, col1, row2, col2);
+                         badMove = false;
+                        if(row1 > row2 && col1 > col2) {
+                            for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                                //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere bianco dx basso), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2);   
+                        } else if(row1 > row2 && col1 < col2) {
+                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere bianco sx basso), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2);  
+                        } else if(row1 < row2 && col1 > col2) {
+                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere bianco dx alto), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2); 
+                        } else if(row1 < row2 && col1 < col2) {
+                            for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                                if(!isFreePosition(chessBoard, i, j)) 
+                                    badMove = true;
+                            } 
+                            if(badMove)
+                                wprintf(L"\nMossa non valida (alfiere bianco sx alto), riprova.\n");   
+                            else 
+                                hasWin = move(chessBoard, row1, col1, row2, col2);  
+                        }
                     } else {
                         badMove = true;
                         wprintf(L"\nMossa non valida (alfiere bianco), riprova.\n");   
@@ -449,16 +487,14 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         // wprintf(L"giu");
                         badMove = false;
                         for(i = row1 + 1; (i < row2) && !badMove; i++) {
-                            wprintf(L"\n%lc, %d", chessBoard[i][col2], badMove);
                             if(!isFreePosition(chessBoard, i, col2)) {
                                 badMove = true;
                             }
                         }
-                        if(badMove) {
+                        if(badMove) 
                             wprintf(L"\nMossa non valida (torre nera retro), riprova.\n");
-                        } else {
+                        else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);
-                        }
                     } else if(row1 == row2 && col1 > col2) {
                         badMove = false;
                         for(j = col1 - 1; (j >= col2 + 1) && !badMove; j--) {
@@ -537,7 +573,7 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
             if(isBlack(chessBoard, row1, col1)) {
                 if(isKingMovement(row1, col1, row2, col2) && !isEqualColor(chessBoard, row1, col1, row2, col2)) {
                     badMove = false;
-                    // su, giù, sx, dx, diag sup-sx, diag inf-sx, diag su-dx, diag inf-dx.
+                    // su, giù, sx, dx.
                     if(row1 > row2 && col1 == col2) {
                         badMove = false;
                         for(i = row1 - 1; (i >= row2 + 1) && !badMove; i--) {
@@ -557,7 +593,7 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             }
                         }
                         if(badMove) {
-                            wprintf(L"\nMossa non valida (Re nera retro), riprova.\n");
+                            wprintf(L"\nMossa non valida (Re nero retro), riprova.\n");
                         } else {
                             hasWin = move(chessBoard, row1, col1, row2, col2);
                         }
@@ -582,13 +618,52 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);
                     }
+                    // diag sup-sx , diag inf-sx, diag su-dx, diag inf-dx
+                    if(row1 > row2 && col1 > col2) {
+                        for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                            //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re nero sx alto), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);   
+                    } else if(row1 > row2 && col1 < col2) {
+                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re nero dx alto), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);  
+                    } else if(row1 < row2 && col1 > col2) {
+                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re nero sx basso), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2); 
+                    } else if(row1 < row2 && col1 < col2) {
+                        for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re nero dx basso), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);  
+                    }
                 } else {
                     badMove = true;
                     wprintf(L"\nMossa non valida (Re nero), riprova.\n");
                 }
             } else {
                 if(isKingMovement(row1, col1, row2, col2) && !isEqualColor(chessBoard, row1, col1, row2, col2)) {
-                    // su, giù, sx, dx, diag sup-sx, diag inf-sx, diag su-dx, diag inf-dx.
+                    // su, giù, sx, dx.
                     badMove = false;
                     if(row1 > row2 && col1 == col2) {
                         badMove = false;
@@ -597,7 +672,7 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                                 badMove = true;
                         }
                         if(badMove) 
-                            wprintf(L"\nMossa non valida (Re bianco giù), riprova.\n");
+                            wprintf(L"\nMossa non valida (Re bianco retro), riprova.\n");
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);
                     } else if(row1 < row2 && col1 == col2) {
@@ -630,6 +705,45 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             wprintf(L"\nMossa non valida (Re bianco sx), riprova.\n");
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);
+                    }
+                    // diag sup-sx , diag inf-sx, diag su-dx, diag inf-dx
+                    if(row1 > row2 && col1 > col2) {
+                        for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                            //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re bianco dx basso), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);   
+                    } else if(row1 > row2 && col1 < col2) {
+                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re bianco sx basso), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);  
+                    } else if(row1 < row2 && col1 > col2) {
+                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re bianco dx alto), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2); 
+                    } else if(row1 < row2 && col1 < col2) {
+                        for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                            if(!isFreePosition(chessBoard, i, j)) 
+                                badMove = true;
+                        } 
+                        if(badMove)
+                            wprintf(L"\nMossa non valida (Re bianco sx alto), riprova.\n");   
+                        else 
+                            hasWin = move(chessBoard, row1, col1, row2, col2);  
                     }
                 } else {
                     badMove = true;
@@ -673,9 +787,6 @@ int main(void) {
         moveCounter = 0;
     wchar_t chessBoard[N][N];
     defineChessBoardMatrix(chessBoard);
-    chessBoard[3][3] = BLACK_BISHOP;
-    chessBoard[5][1] = getWhiteIcon(BLACK_BISHOP);
-    chessBoard[6][0] = getWhiteIcon(BLACK_BISHOP);
     while(!hasWin) {
         while((player < 2) && !hasWin) {
             do {
