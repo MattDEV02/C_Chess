@@ -52,5 +52,5 @@ Mkfile.old
 dkms.conf
 ./main
 main
-.main.o
-./main
+main.o
+.breakpoints

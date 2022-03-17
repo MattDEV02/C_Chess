@@ -1,3 +1,42 @@
+/* 
+    {
+        "name": "Chess",
+        "author": "Matteo Lambertucci, <matteolambertucci3@gmail.com>",
+        "version": "0.1.0",
+        "private": false,
+        "repository": {
+            "type": "git",
+            "url": "https://github.com/MattDEV02/Chess.git"
+        },
+        "bugs": {
+            "url": "https://github.com/MattDEV02/Chess/issues"
+        },
+        "description": "",
+        "license": "ISC",
+        "dependencies": {
+        },
+        "scripts": {
+            "compile": "gcc main.c -o main",
+            "run": "./main",
+            "start": "gcc main.c -o main ; ./main"
+        },
+        "keywords": [
+            "C",
+            "Chess",
+            "Matrixs"
+        ]
+    }
+
+    SPECIFICS:
+        * Description: .
+        * Input: 2 point of a 8 * 8 matrix, anyone with 2 coordinates (x, y) = (row, col).
+        * Pre-condition: rows and cols between 0 and 7.
+        * Output: A short value named winner.
+        * Post-condition: winner is 1 if the first player (with white icons) eat the opponent black queen, else 2.
+        * Type of problem: Logic-game.
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -17,25 +56,24 @@
 #define N 8
 
 void printRow(bool isUp) {
-    int i = 0;
-    wchar_t c = L'_';
+    short i = 0;
     isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
     for (; i < N; i++)
-        wprintf(L" %d ", i);
+        wprintf(L" %i ", i);
     wprintf(L"\n");
 }
 
 void printMatrix(wchar_t matrix[N][N]) {
-    int
+    short
         i = 0,
         j = 0;
     printRow(true);
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
             if (j == 0)
-                wprintf(L"\t%d | %lc ", i, matrix[i][j]);
+                wprintf(L"\t%i | %lc ", i, matrix[i][j]);
             else if (j == N - 1)
-                wprintf(L" %lc | %d", matrix[i][j], i);
+                wprintf(L" %lc | %i", matrix[i][j], i);
             else
                 wprintf(L" %lc ", matrix[i][j]);
             if (j == N - 1 && i < N - 1)
@@ -50,39 +88,39 @@ wchar_t getWhiteIcon(wchar_t black_icon) {
     return black_icon + COLOR_DIFF;
 }
 
-bool isBlackPosition(int row) {
+bool isBlackPosition(short row) {
     return row == 6 || row == 7;
 }
 
-bool isPawnPosition(int row) {
+bool isPawnPosition(short row) {
     return row == 1 || row == 6;
 }
 
-bool isHorsePosition(int row, int col) {
+bool isHorsePosition(short row, short col) {
     return (row == 0 || row == 7) && (col == 1 || col == 6);
 }
 
-bool isBishopPosition(int row, int col) {
+bool isBishopPosition(short row, short col) {
     return (row == 0 || row == 7) && (col == 2 || col == 5);
 }
 
-bool isTowerPosition(int row, int col) {
+bool isTowerPosition(short row, short col) {
     return (row == 0 || row == 7) && (col == 0 || col == 7);
 }
 
-bool isKingPosition(int row, int col) {
+bool isKingPosition(short row, short col) {
     return (row == 0 || row == 7) && (col == 4);
 }
 
-bool isQueenPosition(int row, int col) {
+bool isQueenPosition(short row, short col) {
     return (row == 0 || row == 7) && (col == 3);
 }
 
-bool isEmptyPosition(int row) {
+bool isEmptyPosition(short row) {
     return row >= 2 && row <= 5;
 }
 
-bool isEmptySquarePosition(int row, int col) {
+bool isEmptySquarePosition(short row, short col) {
     return (row + col) % 2 == 0;
 }
 
@@ -126,15 +164,15 @@ bool isEqualColor(wchar_t icon1, wchar_t icon2) {
     );
 }
 
-bool isBlackPawnDiaogonalMove(wchar_t chessBoard[N][N], int row1, int col1, int row2, int col2) {
+bool isBlackPawnDiaogonalMove(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
     return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 - 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
 }
 
-bool isWhitePawnDiaogonalMove(wchar_t chessBoard[N][N], int row1, int col1, int row2, int col2) {
+bool isWhitePawnDiaogonalMove(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
     return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 + 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
 }
 
-bool isHorseMovement(int row1, int col1, int row2, int col2) {
+bool isHorseMovement(short row1, short col1, short row2, short col2) {
     return 
         (row1 == row2 + 1 && col1 == col2 + 2) || 
         (row1 == row2 + 2 && col1 == col2 + 1) ||
@@ -146,11 +184,11 @@ bool isHorseMovement(int row1, int col1, int row2, int col2) {
         (row1 == row2 - 2 && col1 == col2 + 1);
 };
 
-bool isBishopMovement(int row1, int col1, int row2, int col2) {
+bool isBishopMovement(short row1, short col1, short row2, short col2) {
     return ((row1 + col1  - row2 + col2) % 2 == 0) && (row1 != row2 && col1 != col2);
 }
 
-bool isTowerMovement(int row1, int col1, int row2, int col2) {
+bool isTowerMovement(short row1, short col1, short row2, short col2) {
     return 
         (row2 > row1 && col1 == col2) ||
         (row1 == row2 && col1 > col2) ||
@@ -158,13 +196,13 @@ bool isTowerMovement(int row1, int col1, int row2, int col2) {
         (row1 == row2 && col1 < col2);
 }
 
-bool isKingMovement(int row1, int col1, int row2, int col2) {
+bool isKingMovement(short row1, short col1, short row2, short col2) {
     return 
         isBishopMovement(row1, col1, row2, col2) ||
         isTowerMovement(row1, col1, row2, col2);
 }
 
-bool isQueenMovement(int row1, int col1, int row2, int col2) {
+bool isQueenMovement(short row1, short col1, short row2, short col2) {
     return 
         (row1 == row2 - 1 && col1 == col2) ||
         (row1 == row2 + 1 && col1 == col2) ||
@@ -176,7 +214,7 @@ bool isQueenMovement(int row1, int col1, int row2, int col2) {
 }
 
 void defineChessBoardMatrix(wchar_t chessBoard[N][N]) {
-    int
+    short
         i = 0,
         j = 0;
     for (i = 0; i < N; i++) {
@@ -199,7 +237,7 @@ void defineChessBoardMatrix(wchar_t chessBoard[N][N]) {
     }
 }
 
-void printIconStringName(wchar_t icon) { // to swtich case
+void printIconStringName(wchar_t icon) { 
     if(isPawn(icon))
         wprintf(L"Pawn.\n");
     else if(isHorse(icon))
@@ -212,15 +250,15 @@ void printIconStringName(wchar_t icon) { // to swtich case
         wprintf(L"King.\n");
     else if(isQueen(icon))
         wprintf(L"Queen.\n");
-    else if(isEmptyPosition(icon))
+    else if(isFreePosition(icon))
         wprintf(L"Empty.\n");
     else {
-        wprintf(L"Not valid icon !\n");
-        system("exit");
+        wprintf(L"\n \nNot valid icon !\n \n");
+        exit(EXIT_FAILURE);
     }
 }
 
-bool move(wchar_t chessBoard[N][N], int row1, int col1, int row2, int col2) {
+bool move(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
     wchar_t temp = chessBoard[row2][col2];
     if(!isFreePosition(temp)) {
         wprintf(L"\nHai mangiato un %lc  %ls dell'avversario ! ; ", temp, isBlack(chessBoard[row2][col2]) ? L"nero" : L"bianco");
@@ -228,10 +266,10 @@ bool move(wchar_t chessBoard[N][N], int row1, int col1, int row2, int col2) {
     }
     chessBoard[row2][col2] = chessBoard[row1][col1];
     chessBoard[row1][col1] = isEmptySquarePosition(row1, col1) ? EMPTY_SQUARE : FILLED_SQUARE;
-    return temp == BLACK_QUEEN || temp == getWhiteIcon(BLACK_QUEEN);
+    return isQueen(temp);
 }
 
-int setCoordinate(int x) {
+short setCoordinate(int x) {
     if(x < 0)
         return 0;
     else if(x > N - 1)
@@ -240,8 +278,8 @@ int setCoordinate(int x) {
         return x;
 }
 
-bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
-    int
+bool playerTurn(wchar_t chessBoard[N][N], short row1, short col1) {
+    short
         row2 = 0,
         col2 = 0,
         i = 0,
@@ -253,12 +291,12 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
         if(badMove)
             printMatrix(chessBoard);
         wprintf(L"\nInserisci la riga dove vuoi arrivare: ");
-        scanf("%d", & row2);
+        scanf("%hu", &(row2));
         wprintf(L"\nInserisci la colonna dove vuoi arrivare: ");
-        scanf("%d", & col2);
+        scanf("%hu", &(col2));
         row2 = setCoordinate(row2);
         col2 = setCoordinate(col2);
-        wprintf(L"\nPosizione di arrivo: %lc ; (%d, %d) ; ", chessBoard[row2][col2], row2, col2);
+        wprintf(L"\nPosizione di arrivo: %lc ; (%i, %i) ; ", chessBoard[row2][col2], row2, col2);
         printIconStringName(chessBoard[row2][col2]);
         if (isPawn(chessBoard[row1][col1])) {
             if (isBlack(chessBoard[row1][col1])) {
@@ -805,29 +843,28 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
     return hasWin;
 }
 
-int main(void) { // int to short rows and cols
+int main(void) { 
     setlocale(LC_ALL, "");
     bool 
         hasWin = false,
         badMove = false;
-    int
-        row1 = 0,
-        col1 = 0,
-        moveCounter = 0;
+    int movesCounter = 0;
     short
         player = 0,
-        winner = 0;
+        winner = 0,
+        row1 = 0,
+        col1 = 0;
     wchar_t chessBoard[N][N];
     defineChessBoardMatrix(chessBoard);
     while(!hasWin) {
         while((player < 2) && !hasWin) {
             do {
-                wprintf(L"\nTurno giocatore %i, colore %ls, mossa totale numero %d:\n \n", player + 1, player == 1 ? L"neri" : L"bianchi", moveCounter + 1);
+                wprintf(L"\nTurno giocatore %i, colore %ls, mossa totale numero %d:\n \n", player + 1, player == 1 ? L"neri" : L"bianchi", movesCounter + 1);
                 printMatrix(chessBoard);
                 wprintf(L"\n \nGiocatore %i Inserisci la riga attuale: ", player + 1);
-                scanf("%d", & row1);
+                scanf("%hu", &(row1));
                 wprintf(L"\nGiocatore %i Inserisci la colonna attuale: ", player + 1);
-                scanf("%d", & col1);
+                scanf("%hu", &(col1));
                 row1 = setCoordinate(row1);
                 col1 = setCoordinate(col1);
                 if(player == 0 && isBlack(chessBoard[row1][col1])) {
@@ -842,11 +879,11 @@ int main(void) { // int to short rows and cols
                 } else 
                     badMove = false;
             } while(badMove);
-            wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%d, %d) ; ", chessBoard[row1][col1], isBlack(chessBoard[row1][col1]) ? L"nero" : L"bianco", row1, col1);
+            wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%i, %i) ; ", chessBoard[row1][col1], isBlack(chessBoard[row1][col1]) ? L"nero" : L"bianco", row1, col1);
             printIconStringName(chessBoard[row1][col1]);
             hasWin = playerTurn(chessBoard, row1, col1);
             winner = player + 1;
-            moveCounter++;
+            movesCounter++;
             if(player == 0)
                 player++;
             else 
@@ -855,6 +892,6 @@ int main(void) { // int to short rows and cols
     }
     system("tput bel"); // linux sound
     printMatrix(chessBoard);
-    wprintf(L"\n \nVincitore: giocatore %i (%ls) in %d mosse totali.\n \n", winner, winner == 1 ? L"bianchi" : L"neri", moveCounter); 
+    wprintf(L"\n \nVincitore: giocatore %i (%ls) in %d mosse totali.\n \n", winner, winner == 1 ? L"bianchi" : L"neri", movesCounter); 
     return EXIT_SUCCESS;
 }
