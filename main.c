@@ -372,7 +372,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     if(isFreePosition(chessBoard, row2, col2) || !isEqualColor(chessBoard, row1, col1, row2, col2)) {
                         badMove = false;
                         if(row1 > row2 && col1 > col2) {
-                            for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                            for(i = row1 - 1, j = col1 - 1; ((i >= row2 + 1) || (j >= col2 + 1)) && !badMove; i--, j--) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
@@ -382,7 +384,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2);   
                         } else if(row1 > row2 && col1 < col2) {
-                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -391,7 +395,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2);  
                         } else if(row1 < row2 && col1 > col2) {
-                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -400,7 +406,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2); 
                         } else if(row1 < row2 && col1 < col2) {
-                            for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                            for(i = row1 + 1, j = col1 + 1; ((i < row2) || (j < col2)) && !badMove; i++, j++) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -423,8 +431,10 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         badMove = false;
                          badMove = false;
                         if(row1 > row2 && col1 > col2) {
-                            for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                            for(i = row1 - 1, j = col1 - 1; ((i >= row2 + 1) || (j >= col2 + 1)) && !badMove; i--, j--) {
                                 //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -433,7 +443,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2);   
                         } else if(row1 > row2 && col1 < col2) {
-                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -442,7 +454,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2);  
                         } else if(row1 < row2 && col1 > col2) {
-                            for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                            for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -451,7 +465,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                             else 
                                 hasWin = move(chessBoard, row1, col1, row2, col2); 
                         } else if(row1 < row2 && col1 < col2) {
-                            for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                            for(i = row1 + 1, j = col1 + 1; ((i < row2) || (j < col2)) && !badMove; i++, j++) {
+                                i = setCoordinate(i);
+                                j = setCoordinate(j);
                                 if(!isFreePosition(chessBoard, i, j)) 
                                     badMove = true;
                             } 
@@ -620,8 +636,10 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     }
                     // diag sup-sx , diag inf-sx, diag su-dx, diag inf-dx
                     if(row1 > row2 && col1 > col2) {
-                        for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                        for(i = row1 - 1, j = col1 - 1; ((i >= row2 + 1) || (j >= col2 + 1)) && !badMove; i--, j--) {
                             //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -630,7 +648,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);   
                     } else if(row1 > row2 && col1 < col2) {
-                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                        for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -639,7 +659,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);  
                     } else if(row1 < row2 && col1 > col2) {
-                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                        for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -648,7 +670,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2); 
                     } else if(row1 < row2 && col1 < col2) {
-                        for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                        for(i = row1 + 1, j = col1 + 1; ((i < row2) || (j < col2)) && !badMove; i++, j++) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -708,7 +732,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                     }
                     // diag sup-sx , diag inf-sx, diag su-dx, diag inf-dx
                     if(row1 > row2 && col1 > col2) {
-                        for(i = row1 - 1, j = col1 - 1; (i >= row2 + 1) && (j >= col2 + 1) && !badMove; i--, j--) {
+                        for(i = row1 - 1, j = col1 - 1; ((i >= row2 + 1) || (j >= col2 + 1)) && !badMove; i--, j--) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             //wprintf(L"\n[%d][%d] = %lc, %d\n", i, j, chessBoard[i][j], badMove);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
@@ -718,7 +744,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);   
                     } else if(row1 > row2 && col1 < col2) {
-                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                        for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -727,7 +755,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2);  
                     } else if(row1 < row2 && col1 > col2) {
-                        for(i = row1 + 1, j = col1 - 1; (i < row2) && (j >= col2 + 1) && !badMove; i++, j--) {
+                        for(i = row1 + 1, j = col1 - 1; ((i < row2) || (j >= col2 + 1)) && !badMove; i++, j--) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -736,7 +766,9 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
                         else 
                             hasWin = move(chessBoard, row1, col1, row2, col2); 
                     } else if(row1 < row2 && col1 < col2) {
-                        for(i = row1 + 1, j = col1 + 1; (i < row2) && (j < col2) && !badMove; i++, j++) {
+                        for(i = row1 + 1, j = col1 + 1; ((i < row2) || (j < col2)) && !badMove; i++, j++) {
+                            i = setCoordinate(i);
+                            j = setCoordinate(j);
                             if(!isFreePosition(chessBoard, i, j)) 
                                 badMove = true;
                         } 
@@ -775,6 +807,7 @@ bool playerTurn(wchar_t chessBoard[N][N], int row1, int col1) {
 }
 
 int main(void) {
+    // BLACK KING (5, 2) ==> (0, 7) [diag sup-dx];
     setlocale(LC_ALL, "");
     bool 
         hasWin = false,
@@ -822,6 +855,6 @@ int main(void) {
     }
     system("tput bel");
     printMatrix(chessBoard);
-    wprintf(L"\n \nVincitore: giocatore %d in %d mosse totali.", player + 1, moveCounter); 
+    wprintf(L"\n \nVincitore: giocatore %d (%ls) in %d mosse totali.", player + 1, player == 1 ? L"neri" : L"bianchi", moveCounter); 
     return EXIT_SUCCESS;
 }
