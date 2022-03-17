@@ -42,6 +42,7 @@
 #include <stdbool.h>
 #include <locale.h>
 #include <wchar.h>
+#include <time.h>
 
 #define FILLED_SQUARE 0x25A0
 #define EMPTY_SQUARE  0x25A1
@@ -55,8 +56,20 @@
 #define COLOR_DIFF 6
 #define N 8
 
+
+struct tm* restrict printCurrentDateTime(bool isStartTime) {
+    const size_t buffer_dim = 30;
+    char dateTimeStringBuffer[buffer_dim];
+    const time_t now = time(NULL);
+    struct tm* restrict time_info = localtime(&(now));
+    time_info->tm_hour += 1; 
+    strftime(dateTimeStringBuffer, buffer_dim, "%Y-%m-%d %H:%M:%S", time_info);
+    wprintf(L"\nGame %ls time = %s\n", isStartTime ? L"start" : L"end", dateTimeStringBuffer);
+    return time_info;
+}
+
 void printRow(bool isUp) {
-    short i = 0;
+    unsigned short i = 0;
     isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
     for (; i < N; i++)
         wprintf(L" %i ", i);
@@ -64,7 +77,7 @@ void printRow(bool isUp) {
 }
 
 void printMatrix(wchar_t matrix[N][N]) {
-    short
+    unsigned short
         i = 0,
         j = 0;
     printRow(true);
@@ -164,15 +177,15 @@ bool isEqualColor(wchar_t icon1, wchar_t icon2) {
     );
 }
 
-bool isBlackPawnDiaogonalMove(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
+bool isBlackPawnDiaogonalMove(wchar_t chessBoard[N][N], unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 - 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
 }
 
-bool isWhitePawnDiaogonalMove(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
+bool isWhitePawnDiaogonalMove(wchar_t chessBoard[N][N], unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 + 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
 }
 
-bool isHorseMovement(short row1, short col1, short row2, short col2) {
+bool isHorseMovement(unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return 
         (row1 == row2 + 1 && col1 == col2 + 2) || 
         (row1 == row2 + 2 && col1 == col2 + 1) ||
@@ -184,11 +197,11 @@ bool isHorseMovement(short row1, short col1, short row2, short col2) {
         (row1 == row2 - 2 && col1 == col2 + 1);
 };
 
-bool isBishopMovement(short row1, short col1, short row2, short col2) {
+bool isBishopMovement(unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return ((row1 + col1  - row2 + col2) % 2 == 0) && (row1 != row2 && col1 != col2);
 }
 
-bool isTowerMovement(short row1, short col1, short row2, short col2) {
+bool isTowerMovement(unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return 
         (row2 > row1 && col1 == col2) ||
         (row1 == row2 && col1 > col2) ||
@@ -196,13 +209,13 @@ bool isTowerMovement(short row1, short col1, short row2, short col2) {
         (row1 == row2 && col1 < col2);
 }
 
-bool isKingMovement(short row1, short col1, short row2, short col2) {
+bool isKingMovement(unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return 
         isBishopMovement(row1, col1, row2, col2) ||
         isTowerMovement(row1, col1, row2, col2);
 }
 
-bool isQueenMovement(short row1, short col1, short row2, short col2) {
+bool isQueenMovement(unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     return 
         (row1 == row2 - 1 && col1 == col2) ||
         (row1 == row2 + 1 && col1 == col2) ||
@@ -214,7 +227,7 @@ bool isQueenMovement(short row1, short col1, short row2, short col2) {
 }
 
 void defineChessBoardMatrix(wchar_t chessBoard[N][N]) {
-    short
+    unsigned short
         i = 0,
         j = 0;
     for (i = 0; i < N; i++) {
@@ -258,10 +271,10 @@ void printIconStringName(wchar_t icon) {
     }
 }
 
-bool move(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
+bool move(wchar_t chessBoard[N][N], unsigned short row1, unsigned short col1, unsigned short row2, unsigned short col2) {
     wchar_t temp = chessBoard[row2][col2];
     if(!isFreePosition(temp)) {
-        wprintf(L"\nHai mangiato un %lc  %ls dell'avversario ! ; ", temp, isBlack(chessBoard[row2][col2]) ? L"nero" : L"bianco");
+        wprintf(L"\nHai mangiato un %lc  %ls/a dell'avversario ! ; ", temp, isBlack(chessBoard[row2][col2]) ? L"nero" : L"bianco");
         printIconStringName(temp);
     }
     chessBoard[row2][col2] = chessBoard[row1][col1];
@@ -269,7 +282,7 @@ bool move(wchar_t chessBoard[N][N], short row1, short col1, short row2, short co
     return isQueen(temp);
 }
 
-short setCoordinate(int x) {
+unsigned short setCoordinate(int x) {
     if(x < 0)
         return 0;
     else if(x > N - 1)
@@ -278,8 +291,8 @@ short setCoordinate(int x) {
         return x;
 }
 
-bool playerTurn(wchar_t chessBoard[N][N], short row1, short col1) {
-    short
+bool playerTurn(wchar_t chessBoard[N][N], unsigned short row1, unsigned short col1) {
+    unsigned short
         row2 = 0,
         col2 = 0,
         i = 0,
@@ -848,14 +861,15 @@ int main(void) {
     bool 
         hasWin = false,
         badMove = false;
-    int movesCounter = 0;
-    short
+    unsigned short
         player = 0,
         winner = 0,
         row1 = 0,
         col1 = 0;
+    unsigned int movesCounter = 0;
     wchar_t chessBoard[N][N];
     defineChessBoardMatrix(chessBoard);
+    printCurrentDateTime(true);
     while(!hasWin) {
         while((player < 2) && !hasWin) {
             do {
@@ -892,6 +906,8 @@ int main(void) {
     }
     system("tput bel"); // linux sound
     printMatrix(chessBoard);
-    wprintf(L"\n \nVincitore: giocatore %i (%ls) in %d mosse totali.\n \n", winner, winner == 1 ? L"bianchi" : L"neri", movesCounter); 
+    wprintf(L"\n \nVincitore: giocatore %i (%ls) in %d mosse totali.\n", winner, winner == 1 ? L"bianchi" : L"neri", movesCounter);
+    printCurrentDateTime(false);
+    wprintf(L"\n");
     return EXIT_SUCCESS;
 }
