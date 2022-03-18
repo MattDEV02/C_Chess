@@ -1,3 +1,6 @@
+#ifndef POSITIONS_H
+
+
 bool isBlackPosition(short row);
 
 bool isPawnPosition(short row);
@@ -17,3 +20,6 @@ bool isEmptyPosition(short row);
 bool isEmptySquarePosition(short row, short col);
 
 bool isFreePosition(wchar_t icon);
+
+
+#endif

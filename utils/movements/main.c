@@ -1,3 +1,9 @@
+#include "../stdutils/main.h"
+#include "../positions/main.h"
+#include "../icons/main.h"
+#include "main.h"
+
+
 bool isBlackPawnDiaogonalMovement(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
     return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 - 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
 }

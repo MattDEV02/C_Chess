@@ -1,3 +1,6 @@
+#include "main.h"
+
+
 const time_t getCurrentDateTime(bool isStartTime) {
     const size_t buffer_dim = 30;
     char dateTimeStringBuffer[buffer_dim];
@@ -45,4 +48,8 @@ unsigned short setCoordinate(int x) {
         return N - 1;
     else 
         return x;
+}
+
+const double dabs(double value) {
+    return value >= 0 ? value : (-1 * value);
 }

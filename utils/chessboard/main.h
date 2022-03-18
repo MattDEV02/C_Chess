@@ -1,3 +1,6 @@
+#ifndef CHESSBOARD_H
+
+
 void defineChessBoardMatrix(wchar_t chessBoard[N][N]);
 
 /* 
@@ -9,3 +12,6 @@ void defineChessBoardMatrix(wchar_t chessBoard[N][N]);
         * Post-condition: .
 */
 bool playerTurn(wchar_t chessBoard[N][N], short row1, short col1);
+
+
+#endif

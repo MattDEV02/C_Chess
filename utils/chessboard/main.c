@@ -1,3 +1,10 @@
+#include "../stdutils/main.h"
+#include "../positions/main.h"
+#include "../icons/main.h"
+#include "../movements/main.h"
+#include "main.h"
+
+
 void defineChessBoardMatrix(wchar_t chessBoard[N][N]) {
     unsigned short
         i = 0,

@@ -1,3 +1,9 @@
+#include <stdlib.h>
+#include "../stdutils/main.h"
+#include "../positions/main.h"
+#include "main.h"
+
+
 wchar_t getWhiteIcon(wchar_t black_icon) {
     return black_icon + COLOR_DIFF;
 }

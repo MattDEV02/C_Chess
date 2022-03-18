@@ -1,3 +1,8 @@
+#include "../stdutils/main.h"
+#include "../icons/main.h"
+#include "main.h"
+
+
 bool isBlackPosition(short row) {
     return row == 6 || row == 7;
 }
