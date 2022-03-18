@@ -1,14 +1,22 @@
-#ifndef STDUTILS_H
+#ifndef __STDUTILS_H_
+#define __STDUTILS_H_
+
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
 #include <wchar.h>
 
-#define COLOR_DIFF 6
+#define COLOR_DELTA 6
 #define N 8 
-// N is the matrix order
+// N is the matrix order.
+// COLOR_DELTA is the costtant unicode wchar difference between white icons and black icons.
 
+
+typedef struct Point {
+	short row; // x coordinate
+	short col;// y coordinate
+} Point; 
 
 const time_t getCurrentDateTime(bool isStartTime);
 
@@ -18,6 +26,7 @@ void printMatrix(wchar_t matrix[N][N]);
 
 unsigned short setCoordinate(int x);
 
-const double dabs(double value);
+const double dabs(double value); // abs function for double type values
+
 
 #endif

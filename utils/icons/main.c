@@ -5,7 +5,7 @@
 
 
 wchar_t getWhiteIcon(wchar_t black_icon) {
-    return black_icon + COLOR_DIFF;
+    return black_icon + COLOR_DELTA;
 }
 
 bool isPawn(wchar_t icon) {

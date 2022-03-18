@@ -11,7 +11,7 @@
         "bugs": {
             "url": "https://github.com/MattDEV02/Chess/issues/"
         },
-        "description": "",
+        "description": "Program that simulates the game of "Chess" between 2 people with real pieces. N.B. = this program does not work on Windows operating systems.",
         "license": "ISC",
         "dependencies": {
         },
@@ -31,7 +31,7 @@
 
 /*
     SPECIFICS:
-        * Description: .
+        * Description: Program that simulates the game of "Chess" between 2 people with real pieces. N.B. =                            this program does not work on Windows operating systems.
         * Input: 2 point of a (8 * 8) wchart_t matrix, anyone with 2 coordinates (x, y) = (row, col).
         * Pre-condition: rows and cols between 0 and 7.
         * Output: A short value named winner.
@@ -54,12 +54,13 @@ int main(void) {
     bool 
         hasWin = false,
         badMove = false;
+	unsigned int movesCounter = 0;
     short
         player = 0,
         winner = 0,
         row1 = 0,
         col1 = 0;
-    unsigned int movesCounter = 0;
+	Point p1;
     wchar_t chessBoard[N][N];
     defineChessBoardMatrix(chessBoard);
     const time_t startTime = getCurrentDateTime(true);
@@ -85,9 +86,11 @@ int main(void) {
             } else 
                 badMove = false;
         } while(badMove);
+		p1.row = row1;
+		p1.col = col1;
         wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%i, %i) ; ", chessBoard[row1][col1], isBlack(chessBoard[row1][col1]) ? L"nero" : L"bianco", row1, col1);
         printIconStringName(chessBoard[row1][col1]);
-        hasWin = playerTurn(chessBoard, row1, col1);
+        hasWin = playerTurn(chessBoard, &(p1));
         winner = player + 1;
         movesCounter++;
         if(player == 0)

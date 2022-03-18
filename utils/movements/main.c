@@ -4,62 +4,62 @@
 #include "main.h"
 
 
-bool isBlackPawnDiaogonalMovement(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
-    return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 - 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
+bool isBlackPawnDiaogonalMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+    return !isFreePosition(chessBoard[p2->row][p2->col]) && (p1->row + p1->col - 2 == p2->row + p2->col || p1->row + p1->col == p2->row + p2->col) && (p1->row != p2->row && p1->col != p2->col);
 }
 
-bool isWhitePawnDiaogonalMovement(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
-    return !isFreePosition(chessBoard[row2][col2]) && (row1 + col1 + 2 == row2 + col2 || row1 + col1 == row2 + col2) && (row1 != row2 && col1 != col2);
+bool isWhitePawnDiaogonalMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+    return !isFreePosition(chessBoard[p2->row][p2->col]) && (p1->row + p1->col + 2 == p2->row + p2->col || p1->row + p1->col == p2->row + p2->col) && (p1->row != p2->row && p1->col != p2->col);
 }
 
-bool isHorseMovement(short row1, short col1, short row2, short col2) {
+bool isHorseMovement(Point* p1, Point* p2) {
     return 
-        (row1 == row2 + 1 && col1 == col2 + 2) || 
-        (row1 == row2 + 2 && col1 == col2 + 1) ||
-        (row1 == row2 - 1 && col1 == col2 - 2) || 
-        (row1 == row2 - 2 && col1 == col2 - 1) ||
-        (row1 == row2 - 1 && col1 == col2 + 2) ||
-        (row1 == row2 + 1 && col1 == col2 - 2) ||
-        (row1 == row2 + 2 && col1 == col2 - 1) ||
-        (row1 == row2 - 2 && col1 == col2 + 1);
+        (p1->row == p2->row + 1 && p1->col == p2->col + 2) || 
+        (p1->row == p2->row + 2 && p1->col == p2->col + 1) ||
+        (p1->row == p2->row - 1 && p1->col == p2->col - 2) || 
+        (p1->row == p2->row - 2 && p1->col == p2->col - 1) ||
+        (p1->row == p2->row - 1 && p1->col == p2->col + 2) ||
+        (p1->row == p2->row + 1 && p1->col == p2->col - 2) ||
+        (p1->row == p2->row + 2 && p1->col == p2->col - 1) ||
+        (p1->row == p2->row - 2 && p1->col == p2->col + 1);
 };
 
-bool isBishopMovement(short row1, short col1, short row2, short col2) {
-    return ((row1 + col1  - row2 + col2) % 2 == 0) && (row1 != row2 && col1 != col2);
+bool isBishopMovement(Point* p1, Point* p2) {
+    return ((p1->row + p1->col  - p2->row + p2->col) % 2 == 0) && (p1->row != p2->row && p1->col != p2->col);
 }
 
-bool isTowerMovement(short row1, short col1, short row2, short col2) {
+bool isTowerMovement(Point* p1, Point* p2) {
     return 
-        (row2 > row1 && col1 == col2) ||
-        (row1 == row2 && col1 > col2) ||
-        (row2 < row1 && col1 == col2) ||
-        (row1 == row2 && col1 < col2);
+        (p2->row > p1->row && p1->col == p2->col) ||
+        (p1->row == p2->row && p1->col > p2->col) ||
+        (p2->row < p1->row && p1->col == p2->col) ||
+        (p1->row == p2->row && p1->col < p2->col);
 }
 
-bool isKingMovement(short row1, short col1, short row2, short col2) {
+bool isKingMovement(Point* p1, Point* p2) {
     return 
-        isBishopMovement(row1, col1, row2, col2) ||
-        isTowerMovement(row1, col1, row2, col2);
+        isBishopMovement(p1, p2) ||
+        isTowerMovement(p1, p2);
 }
 
-bool isQueenMovement(short row1, short col1, short row2, short col2) {
+bool isQueenMovement(Point* p1, Point* p2) {
     return 
-        (row1 == row2 - 1 && col1 == col2) ||
-        (row1 == row2 + 1 && col1 == col2) ||
-        (row1 == row2 && col1 == col2 - 1) ||
-        (row1 == row2 && col1 == col2 + 1) ||
-        (row1 + col1 - 2 == row2 + col2 && row1 != row2 && col1 != col2) ||
-        (row1 + col1 + 2 == row2 + col2 && row1 != row2 && col1 != col2) ||
-        (row1 + col1 == row2 + col2 && row1 != row2 && col1 != col2);
+        (p1->row == p2->row - 1 && p1->col == p2->col) ||
+        (p1->row == p2->row + 1 && p1->col == p2->col) ||
+        (p1->row == p2->row && p1->col == p2->col - 1) ||
+        (p1->row == p2->row && p1->col == p2->col + 1) ||
+        (p1->row + p1->col - 2 == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col) ||
+        (p1->row + p1->col + 2 == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col) ||
+        (p1->row + p1->col == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col);
 }
 
-bool move(wchar_t chessBoard[N][N], short row1, short col1, short row2, short col2) {
-    const wchar_t temp = chessBoard[row2][col2];
+bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+    const wchar_t temp = chessBoard[p2->row][p2->col];
     if(!isFreePosition(temp)) {
-        wprintf(L"\nHai mangiato un %lc  %ls/a dell'avversario ! ; ", temp, isBlack(chessBoard[row2][col2]) ? L"nero" : L"bianco");
+        wprintf(L"\nHai mangiato un %lc  %ls/a dell'avversario ! ; ", temp, isBlack(chessBoard[p2->row][p2->col]) ? L"nero" : L"bianco");
         printIconStringName(temp);
     }
-    chessBoard[row2][col2] = chessBoard[row1][col1];
-    chessBoard[row1][col1] = isEmptySquarePosition(row1, col1) ? EMPTY_SQUARE : FILLED_SQUARE;
+    chessBoard[p2->row][p2->col] = chessBoard[p1->row][p1->col];
+    chessBoard[p1->row][p1->col] = isEmptySquarePosition(p1) ? EMPTY_SQUARE : FILLED_SQUARE;
     return isQueen(temp);
 }

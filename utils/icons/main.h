@@ -1,4 +1,5 @@
-#ifndef ICONS_H
+#ifndef __ICONS_H_
+#define __ICONS_H_
 
 #define FILLED_SQUARE 0x25A0
 #define EMPTY_SQUARE  0x25A1

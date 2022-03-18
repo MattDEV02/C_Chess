@@ -11,32 +11,32 @@ bool isPawnPosition(short row) {
     return row == 1 || row == 6;
 }
 
-bool isHorsePosition(short row, short col) {
-    return (row == 0 || row == 7) && (col == 1 || col == 6);
+bool isHorsePosition(Point* p) {
+    return (p->row == 0 || p->row == 7) && (p->col == 1 || p->col == 6);
 }
 
-bool isBishopPosition(short row, short col) {
-    return (row == 0 || row == 7) && (col == 2 || col == 5);
+bool isBishopPosition(Point* p) {
+    return (p->row == 0 || p->row == 7) && (p->col == 2 || p->col == 5);
 }
 
-bool isTowerPosition(short row, short col) {
-    return (row == 0 || row == 7) && (col == 0 || col == 7);
+bool isTowerPosition(Point* p) {
+    return (p->row == 0 || p->row == 7) && (p->col == 0 || p->col == 7);
 }
 
-bool isKingPosition(short row, short col) {
-    return (row == 0 || row == 7) && (col == 4);
+bool isKingPosition(Point* p) {
+    return (p->row == 0 || p->row == 7) && (p->col == 4);
 }
 
-bool isQueenPosition(short row, short col) {
-    return (row == 0 || row == 7) && (col == 3);
+bool isQueenPosition(Point* p) {
+    return (p->row == 0 || p->row == 7) && (p->col == 3);
 }
 
 bool isEmptyPosition(short row) {
     return row >= 2 && row <= 5;
 }
 
-bool isEmptySquarePosition(short row, short col) {
-    return (row + col) % 2 == 0;
+bool isEmptySquarePosition(Point* p) {
+    return ((p->row + p->col) % 2) == 0;
 }
 
 bool isFreePosition(wchar_t icon) {

@@ -1,23 +1,24 @@
-#ifndef POSITIONS_H
+#ifndef __POSITIONS_H_
+#define __POSITIONS_H_
 
 
 bool isBlackPosition(short row);
 
 bool isPawnPosition(short row);
 
-bool isHorsePosition(short row, short col);
+bool isHorsePosition(Point* p);
 
-bool isBishopPosition(short row, short col);
+bool isBishopPosition(Point* p);
 
-bool isTowerPosition(short row, short col);
+bool isTowerPosition(Point* p);
 
-bool isKingPosition(short row, short col);
+bool isKingPosition(Point* p);
 
-bool isQueenPosition(short row, short col);
+bool isQueenPosition(Point* p);
 
 bool isEmptyPosition(short row);
 
-bool isEmptySquarePosition(short row, short col);
+bool isEmptySquarePosition(Point* p);
 
 bool isFreePosition(wchar_t icon);
 
