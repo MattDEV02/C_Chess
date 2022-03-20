@@ -54,12 +54,24 @@ bool isQueenMovement(Point* p1, Point* p2) {
 }
 
 bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
-    const wchar_t temp = chessBoard[p2->row][p2->col];
-    if(!isFreePosition(temp)) {
-        wprintf(L"\nHai mangiato un %lc  %ls/a dell'avversario ! ; ", temp, isBlack(chessBoard[p2->row][p2->col]) ? L"nero" : L"bianco");
-        printIconStringName(temp);
+    const wchar_t 
+		icon1 = chessBoard[p1->row][p1->col],	
+		icon2 = chessBoard[p2->row][p2->col];
+    if(!isFreePosition(icon2)) {
+        wprintf(L"\nHai mangiato un %lc  %ls/a dell'avversario ! ; ", icon2, isBlack(chessBoard[p2->row][p2->col]) ? L"nero" : L"bianco");
+        printIconStringName(icon2);
     }
-    chessBoard[p2->row][p2->col] = chessBoard[p1->row][p1->col];
+    chessBoard[p2->row][p2->col] = icon1;
     chessBoard[p1->row][p1->col] = isEmptySquarePosition(p1) ? EMPTY_SQUARE : FILLED_SQUARE;
-    return isQueen(temp);
+	if(isPawn(icon1)) {
+		if(isBlack(icon1) && p2->row == 0) 
+			pawnTransition(chessBoard, p2, true);
+		else if(!isBlack(icon1) && p2->row == N - 1) 
+			pawnTransition(chessBoard, p2, false);
+	}
+    return isQueen(icon2);
+}
+
+void castling(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+	// arrocco regina - torre
 }

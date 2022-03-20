@@ -18,5 +18,7 @@ bool isQueenMovement(Point* p1, Point* p2);
 
 bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2);
 
+void castling(wchar_t chessBoard[N][N], Point* p1, Point* p2);
+
 
 #endif

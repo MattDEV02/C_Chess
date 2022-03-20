@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include "../stdutils/main.h"
+#include "../icons/main.h"
+#include "../movements/main.h"
 #include "../positions/main.h"
 #include "main.h"
 
@@ -46,21 +48,59 @@ bool isEqualColor(wchar_t icon1, wchar_t icon2) {
 
 void printIconStringName(wchar_t icon) { 
     if(isPawn(icon))
-        wprintf(L"Pawn.\n");
+        wprintf(L"icon name = Pawn.\n");
     else if(isHorse(icon))
-        wprintf(L"Horse.\n");
+        wprintf(L"icon name = Horse.\n");
     else if(isBishop(icon))
-        wprintf(L"Bishop.\n");
+        wprintf(L"icon name = Bishop.\n");
     else if(isTower(icon))
-        wprintf(L"Tower.\n");
+        wprintf(L"icon name = Tower.\n");
     else if(isKing(icon))
-        wprintf(L"King.\n");
+        wprintf(L"icon name = King.\n");
     else if(isQueen(icon))
-        wprintf(L"Queen.\n");
+        wprintf(L"icon name = Queen.\n");
     else if(isFreePosition(icon))
-        wprintf(L"Empty.\n");
+        wprintf(L"icon name = Empty pos.\n");
     else {
         wprintf(L"\n \nNot valid icon !\n \n");
         exit(EXIT_FAILURE);
     }
+}
+
+void pawnTransition(wchar_t chessBoard[N][N], Point *p, bool isBlack) {
+	short pawnChoice = 0;
+	system("tput bel");
+	wprintf(L"\nScegli in cosa vuoi trasformare il pedone: \n");
+	wprintf(L"\n \n   0: King. \n \n   1: Tower. \n \n   2: Horse. \n \n   3: Bishop.\n \n");
+	scanf("%hu", &(pawnChoice));
+	if(pawnChoice < 0)
+		pawnChoice = 0;
+	else if(pawnChoice > 3)
+		pawnChoice = 3;
+	switch(pawnChoice) {
+		case 0: {
+			chessBoard[p->row][p->col] = isBlack ? BLACK_KING : getWhiteIcon(BLACK_KING);
+			break;
+		};
+		case 1: {
+			chessBoard[p->row][p->col] = isBlack ? BLACK_TOWER : getWhiteIcon(BLACK_TOWER);
+			break;
+		};
+		case 2: {
+			chessBoard[p->row][p->col] = isBlack ? BLACK_HORSE : getWhiteIcon(BLACK_HORSE);
+			break;
+		};
+		case 3: {
+			chessBoard[p->row][p->col] = isBlack ? BLACK_BISHOP : getWhiteIcon(BLACK_BISHOP);
+			break;
+		};
+		default: {
+			wprintf(L"\n \nNot valid pawn transition !\n \n");
+			exit(EXIT_FAILURE);
+			break;
+		};
+	}
+	const wchar_t newIcon = chessBoard[p->row][p->col];
+	wprintf(L"\nScelta: %lc  ; (%i, %i) ; ", newIcon, p->row, p->col);
+	printIconStringName(newIcon);
 }

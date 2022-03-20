@@ -31,5 +31,7 @@ bool isEqualColor(wchar_t icon1, wchar_t icon2);
 
 void printIconStringName(wchar_t icon);
 
+void pawnTransition(wchar_t chessBoard[N][N], Point* p, bool isBlack);
+
 
 #endif

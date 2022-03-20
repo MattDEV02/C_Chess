@@ -47,8 +47,8 @@
 #include "utils/icons/main.h"
 #include "utils/movements/main.h"
 #include "utils/chessboard/main.h"
-     
-            
+
+
 int main(void) { 
     setlocale(LC_ALL, "");
     bool 
