@@ -11,20 +11,22 @@
         "bugs": {
             "url": "https://github.com/MattDEV02/Chess/issues/"
         },
-        "description": "Program that simulates the game of "Chess" between 2 people with real pieces. N.B. = this program does not work on Windows operating systems.",
+        "description": "Program that simulates the game of Chess between 2 people with real pieces. N.B. = this program does not work on Windows operating systems.",
         "license": "ISC",
         "dependencies": {
         },
         "scripts": {
-            "build": "gcc main.c -o main",
+            "build": "gcc main.c utils/stdutils/main.c utils/positions/main.c utils/icons/main.c utils/movements/main.c utils/chessboard/main.c -o main",
             "exec": "./main",
-            "start": "gcc main.c -o main && ./main"
+            "start": "gcc main.c utils/stdutils/main.c utils/positions/main.c utils/icons/main.c utils/movements/main.c utils/chessboard/main.c -o main && ./main"
         },
         "keywords": [
             "C",
             "Chess",
-            "Matrixs",
-            "C Structs"
+            "C Matrixs",
+            "C Structs",
+			"C Pointers",
+			"C DateTimes"
         ]
     }
 */
@@ -32,7 +34,7 @@
 /*
     SPECIFICS:
         * Description: Program that simulates the game of "Chess" between 2 people with real pieces. N.B. =                            this program does not work on Windows operating systems.
-        * Input: 2 point of a (8 * 8) wchart_t matrix, anyone with 2 coordinates (x, y) = (row, col).
+        * Input: 2 point of a (8 * 8) wchart_t matrix, anyone with 2 coordinates (row, col) = (x, y).
         * Pre-condition: rows and cols between 0 and 7.
         * Output: A short value named winner.
         * Post-condition: winner is 1 if the first player (with white icons) eat the opponent black queen, else 2.
