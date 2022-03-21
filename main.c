@@ -69,10 +69,6 @@ int main(void) {
 	Point p1;
     wchar_t chessBoard[N][N]; // 8 x 8
     defineChessBoardMatrix(chessBoard);
-	chessBoard[0][5] = EMPTY_SQUARE;
-	chessBoard[0][6] = FILLED_SQUARE;
-	chessBoard[7][5] = FILLED_SQUARE;
-	chessBoard[7][6] = EMPTY_SQUARE;
     const time_t startTime = getCurrentDateTime(true);
     while((player < 2) && !hasWin) { 
         do {
