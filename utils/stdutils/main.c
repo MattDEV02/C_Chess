@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "main.h"
 
 
@@ -52,4 +53,11 @@ unsigned short setCoordinate(int x) {
 
 const double dabs(double value) {
     return value >= 0 ? value : (-1 * value);
+}
+
+
+void sound(unsigned short times) {
+	unsigned short i = 0;
+	for(; i < times; i++)
+		system("tput bel");
 }

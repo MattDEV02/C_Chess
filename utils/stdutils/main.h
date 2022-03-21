@@ -28,5 +28,7 @@ unsigned short setCoordinate(int x);
 
 const double dabs(double value); // abs function for double type values
 
+void sound(unsigned short times);
+
 
 #endif

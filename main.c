@@ -58,10 +58,12 @@ int main(void) {
         badMove = false;
 	unsigned int movesCounter = 0;
     short
-        player = 0,
-        winner = 0,
         row1 = 0,
         col1 = 0;
+	unsigned short 
+		remainingIcons = 0,
+		player = 0,
+        winner = 0;
 	Point p1;
     wchar_t chessBoard[N][N];
     defineChessBoardMatrix(chessBoard);
@@ -100,11 +102,15 @@ int main(void) {
         else 
             player = 0;
     } 
-    system("tput bel"); // linux bell sound
+    sound(6); // linux bell sound
     printMatrix(chessBoard);
     wprintf(L"\n \nVincitore: giocatore %i (%ls) in %d mosse totali.\n", winner, winner == 1 ? L"bianchi" : L"neri", movesCounter);
     const time_t endTime = getCurrentDateTime(false);
     const double secondsTimeDiff = dabs(difftime(endTime, startTime));
-    wprintf(L"\nMosse totali per secondo: %g (%g secondi = %g minuti)\n \n \n", secondsTimeDiff / movesCounter, secondsTimeDiff, secondsTimeDiff / 60);
+	if(winner == 1)
+		remainingIcons = countBlackIcons(chessBoard);
+	else if(winner == 2) 
+		remainingIcons = countWhiteIcons(chessBoard);
+    wprintf(L"\nMosse totali per secondo: %g (%g secondi = %g minuti) ; %g %c pedine mangiate.\n \n \n", secondsTimeDiff / movesCounter, secondsTimeDiff, secondsTimeDiff / 60, iconPercentage(remainingIcons), 37);
     return EXIT_SUCCESS;
 }

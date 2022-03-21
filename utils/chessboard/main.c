@@ -48,6 +48,7 @@ bool playerTurn(wchar_t chessBoard[N][N], Point* p1) {
         j = 0;
     bool 
         badMove = false,
+		isCastlingPossible = false,
         hasWin = false;
     do { 
         if(badMove)
@@ -583,24 +584,26 @@ bool playerTurn(wchar_t chessBoard[N][N], Point* p1) {
         if (isQueen(chessBoard[p1->row][p1->col])) {
             if(isBlack(chessBoard[p1->row][p1->col])) {
                 if(isQueenMovement(p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
-                    badMove = false;
-                    hasWin = move(chessBoard, p1, &(p2));
-                } else if(isBlackCastling(chessBoard, p1, &(p2))) {
-					// arrocco nero
 					badMove = false;
                     hasWin = move(chessBoard, p1, &(p2));
+                } else if(isCastlingMovement(chessBoard, p1, &(p2))) {
+					// arrocco nero
+					badMove = false;
+                    castling(chessBoard, p1, &(p2));
+					wprintf(L"\nArrocco nero eseguito !\n");
 				} else {
                     badMove = true;
                     wprintf(L"\nMossa non valida (Regina nera), riprova.\n");
                 }
             } else {
                 if(isQueenMovement(p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
-                    badMove = false;
-                    hasWin = move(chessBoard, p1, &(p2));
-                } else if(isWhiteCastling(chessBoard, p1, &(p2))) {
-					// arrocco bianco
 					badMove = false;
                     hasWin = move(chessBoard, p1, &(p2));
+                } else if(isCastlingMovement(chessBoard, p1, &(p2))) {
+					// arrocco bianco
+					badMove = false;
+                    castling(chessBoard, p1, &(p2));
+					wprintf(L"\nArrocco bianco eseguito !\n");
 				} else {
                     badMove = true;
                     wprintf(L"\nMossa non valida (Regina bianca), riprova.\n");

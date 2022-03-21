@@ -69,7 +69,7 @@ void printIconStringName(wchar_t icon) {
 
 void pawnTransition(wchar_t chessBoard[N][N], Point *p, bool isBlack) {
 	short pawnChoice = 0;
-	system("tput bel");
+	sound(6);
 	wprintf(L"\nScegli in cosa vuoi trasformare il pedone: \n");
 	wprintf(L"\n \n   0: King. \n \n   1: Tower. \n \n   2: Horse. \n \n   3: Bishop.\n \n");
 	scanf("%hu", &(pawnChoice));
@@ -103,4 +103,42 @@ void pawnTransition(wchar_t chessBoard[N][N], Point *p, bool isBlack) {
 	const wchar_t newIcon = chessBoard[p->row][p->col];
 	wprintf(L"\nScelta: %lc  ; (%i, %i) ; ", newIcon, p->row, p->col);
 	printIconStringName(newIcon);
+}
+
+const unsigned short countBlackIcons(wchar_t chessBoard[N][N]) {
+	unsigned short
+		i = 0,
+		j = 0,
+		count = 0;
+	wchar_t icon;
+	for(i = 0; i < N; i++) {
+		for(j = 0; j < N; j++) {
+			icon = chessBoard[i][j];
+			if(isBlack(icon) && !isFreePosition(icon))
+				count++;	
+		}
+	}
+	return count;
+}
+
+const unsigned short countWhiteIcons(wchar_t chessBoard[N][N]) {
+	unsigned short
+		i = 0,
+		j = 0,
+		count = 0;
+	wchar_t icon;
+	for(i = 0; i < N; i++) {
+		for(j = 0; j < N; j++) {
+			icon = chessBoard[i][j];
+			if(!isBlack(icon) && !isFreePosition(icon))
+				count++;	
+		}
+	}
+	return count;
+}
+
+const float iconPercentage(unsigned short remainingIcons) {
+	const float totalColorIcons = (float)(2 * N);
+	remainingIcons = (float)(remainingIcons);
+	return ((totalColorIcons - remainingIcons) / totalColorIcons) * 100.0; 
 }

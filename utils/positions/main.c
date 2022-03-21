@@ -24,11 +24,11 @@ bool isTowerPosition(Point* p) {
 }
 
 bool isKingPosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 4);
+    return (p->row == 0 || p->row == 7) && (p->col == 3);
 }
 
 bool isQueenPosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 3);
+    return (p->row == 0 || p->row == 7) && (p->col == 4);
 }
 
 bool isEmptyPosition(short row) {

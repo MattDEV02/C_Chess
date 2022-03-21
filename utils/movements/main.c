@@ -72,31 +72,24 @@ bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
     return isQueen(icon2);
 }
 
-bool isBlackCastling(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+bool isCastlingMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
 	return 
-		isQueen(chessBoard[p1->row][p1->col]);
+		isQueen(chessBoard[p1->row][p1->col]) &&
 		(p2->col - p1->col == 2) &&
 		isFreePosition(chessBoard[p1->row][p1->col + 1]) &&
-		isFreePosition(chessBoard[p1->row][p1->col + 2]) &&
-		isTower(chessBoard[p2->row][p2->col]) &&
-		isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2->row][p2->col]);
-}
-
-bool isWhiteCastling(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
-	return 
-		isQueen(chessBoard[p1->row][p1->col]);
-		(p2->col - p1->col == -2) &&
-		isFreePosition(chessBoard[p1->row][p1->col - 1]) &&
-		isFreePosition(chessBoard[p1->row][p1->col - 2]) &&
-		isTower(chessBoard[p2->row][p2->col]) &&
-		isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2->row][p2->col]);
+		isFreePosition(chessBoard[p2->row][p2->col]) &&
+		isTower(chessBoard[p2->row][p2->col + 1]) &&
+		isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2->row][p2->col + 1]);
 }
 
 void castling(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
-	// arrocco regina - torre
+	Point towerPoint;
+	towerPoint.row = p1->row;
+	towerPoint.col = p2->col + 1;
 	const wchar_t 
 		queen = chessBoard[p1->row][p1->col],
-		tower = chessBoard[p2->row][p2->col];
+		tower = chessBoard[p2->row][p2->col + 1];
 	chessBoard[p2->row][p2->col] = queen;
-	chessBoard[p1->row][p1->col] = tower;
+	chessBoard[p1->row][p1->col + 1] = tower;
+	chessBoard[p1->row][p2->col + 1] = isEmptySquarePosition(&(towerPoint)) ? EMPTY_SQUARE : FILLED_SQUARE;
 }

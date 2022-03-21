@@ -33,5 +33,11 @@ void printIconStringName(wchar_t icon);
 
 void pawnTransition(wchar_t chessBoard[N][N], Point* p, bool isBlack);
 
+const unsigned short countBlackIcons(wchar_t chessBoard[N][N]);
+
+const unsigned short countWhiteIcons(wchar_t chessBoard[N][N]);
+
+const float iconPercentage(unsigned short remainingIcons);
+
 
 #endif
