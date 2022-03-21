@@ -62,7 +62,7 @@ bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
         printIconStringName(icon2);
     }
     chessBoard[p2->row][p2->col] = icon1;
-    chessBoard[p1->row][p1->col] = isEmptySquarePosition(p1) ? EMPTY_SQUARE : FILLED_SQUARE;
+    defineSquare(chessBoard, p1);
 	if(isPawn(icon1)) {
 		if(isBlack(icon1) && p2->row == 0) 
 			pawnTransition(chessBoard, p2, true);
@@ -75,7 +75,8 @@ bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
 bool isCastlingMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
 	return 
 		isQueen(chessBoard[p1->row][p1->col]) &&
-		(p2->col - p1->col == 2) &&
+		(p1->row == p2->row && (p1->row == 0 || p1->row == 7)) &&
+		(p1->col == 4 && p2->col == 6) &&
 		isFreePosition(chessBoard[p1->row][p1->col + 1]) &&
 		isFreePosition(chessBoard[p2->row][p2->col]) &&
 		isTower(chessBoard[p2->row][p2->col + 1]) &&
@@ -91,5 +92,5 @@ void castling(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
 		tower = chessBoard[p2->row][p2->col + 1];
 	chessBoard[p2->row][p2->col] = queen;
 	chessBoard[p1->row][p1->col + 1] = tower;
-	chessBoard[p1->row][p2->col + 1] = isEmptySquarePosition(&(towerPoint)) ? EMPTY_SQUARE : FILLED_SQUARE;
+	defineSquare(chessBoard, &(towerPoint));
 }

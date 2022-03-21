@@ -55,7 +55,9 @@ int main(void) {
     setlocale(LC_ALL, "");
     bool 
         hasWin = false,
-        badMove = false;
+        badMove = false,
+		isBlackCastlingPossible = true, 
+		isWhiteCastlingPossible = true;
 	unsigned int movesCounter = 0;
     short
         row1 = 0,
@@ -65,8 +67,12 @@ int main(void) {
 		player = 0,
         winner = 0;
 	Point p1;
-    wchar_t chessBoard[N][N];
+    wchar_t chessBoard[N][N]; // 8 x 8
     defineChessBoardMatrix(chessBoard);
+	chessBoard[0][5] = EMPTY_SQUARE;
+	chessBoard[0][6] = FILLED_SQUARE;
+	chessBoard[7][5] = FILLED_SQUARE;
+	chessBoard[7][6] = EMPTY_SQUARE;
     const time_t startTime = getCurrentDateTime(true);
     while((player < 2) && !hasWin) { 
         do {
@@ -94,7 +100,7 @@ int main(void) {
 		p1.col = col1;
         wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%i, %i) ; ", chessBoard[row1][col1], isBlack(chessBoard[row1][col1]) ? L"nero" : L"bianco", row1, col1);
         printIconStringName(chessBoard[row1][col1]);
-        hasWin = playerTurn(chessBoard, &(p1));
+        hasWin = playerTurn(chessBoard, &(p1), &(isBlackCastlingPossible), &(isWhiteCastlingPossible));
         winner = player + 1;
         movesCounter++;
         if(player == 0)

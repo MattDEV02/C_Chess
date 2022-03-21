@@ -42,3 +42,7 @@ bool isEmptySquarePosition(Point* p) {
 bool isFreePosition(wchar_t icon) {
     return icon == EMPTY_SQUARE || icon == FILLED_SQUARE;
 }
+
+void defineSquare(wchar_t chessBoard[N][N], Point* p) {
+	chessBoard[p->row][p->col] = isEmptySquarePosition(p) ? EMPTY_SQUARE : FILLED_SQUARE;
+}

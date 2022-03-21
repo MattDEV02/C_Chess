@@ -12,7 +12,7 @@ void defineChessBoardMatrix(wchar_t chessBoard[N][N]);
         * Output: a boolean value named "hasWin".
         * Post-condition: hasWin holds true if a player eats the opponent's queen.
 */
-bool playerTurn(wchar_t chessBoard[N][N], Point* p1);
+bool playerTurn(wchar_t chessBoard[N][N], Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible);
 
 
 #endif
