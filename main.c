@@ -25,8 +25,9 @@
             "Chess",
             "C Matrixs",
             "C Structs",
-			"C Pointers",
-			"C DateTimes"
+	    "C Pointers",
+	    "C DateTimes",
+	    "Bash"
         ]
     }
 */
