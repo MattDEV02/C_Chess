@@ -32,11 +32,11 @@ bool isEqualColor(wchar_t icon1, wchar_t icon2);
 
 void printIconStringName(wchar_t icon);
 
-void pawnTransition(wchar_t** chessBoard, Point* p, bool isBlack);
+void pawnTransition(ChessBoard chessBoard, Point* p, bool isBlack);
 
-const unsigned short countBlackIcons(wchar_t** chessBoard);
+const unsigned short countBlackIcons(ChessBoard chessBoard);
 
-const unsigned short countWhiteIcons(wchar_t** chessBoard);
+const unsigned short countWhiteIcons(ChessBoard chessBoard);
 
 const float iconPercentage(unsigned short remainingIcons);
 

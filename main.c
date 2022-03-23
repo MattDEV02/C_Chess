@@ -26,21 +26,9 @@
             "Chess",
             "C Matrixs",
             "C Structs",
-<<<<<<< HEAD
-<<<<<<< HEAD
 			"C Pointers",
 			"C DateTimes",
 			"Bash"
-=======
-	    "C Pointers",
-	    "C DateTimes",
-	    "Bash"
->>>>>>> origin/main
-=======
-	    "C Pointers",
-	    "C DateTimes",
-	    "Bash"
->>>>>>> origin/main
         ]
     }
 */
@@ -64,7 +52,7 @@
 #include "utils/movements/main.h"
 #include "utils/chessboard/main.h"
 
-
+// (7, 3) ==> (4, 4)
 int main(void) { 
     setlocale(LC_ALL, "");
     bool 
@@ -81,7 +69,7 @@ int main(void) {
 		player = 0,
         winner = 0;
 	Point p1;
-    wchar_t** chessBoard = chessBoardCalloc(); // 8 x 8
+    ChessBoard chessBoard = chessBoardCalloc(); // 8 x 8
     defineChessBoardMatrix(chessBoard);
     const time_t startTime = getCurrentDateTime(true);
     while((player < 2) && !hasWin) { 

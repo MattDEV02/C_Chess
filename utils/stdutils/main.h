@@ -22,11 +22,11 @@ typedef wchar_t** ChessBoard;
 
 const time_t getCurrentDateTime(bool isStartTime);
 
-void printRow(bool isUp);
+void printChessBoardRow(bool isUp);
 
-void printChessBoard(wchar_t** chessBoard);
+void printChessBoard(ChessBoard chessBoard);
 
-wchar_t** chessBoardCalloc();
+ChessBoard chessBoardCalloc();
 
 void chessBoardDealloc(ChessBoard chessBoard);
 

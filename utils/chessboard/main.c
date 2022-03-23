@@ -5,7 +5,7 @@
 #include "main.h"
 
 
-void defineChessBoardMatrix(wchar_t** chessBoard) {
+void defineChessBoardMatrix(ChessBoard chessBoard) {
     unsigned short
         i = 0,
         j = 0;
@@ -40,7 +40,7 @@ void defineChessBoardMatrix(wchar_t** chessBoard) {
         * Output: a boolean value named "hasWin".
         * Post-condition: hasWin holds true if a player eats the opponent's queen.
 */
-bool playerTurn(wchar_t** chessBoard, Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible) {
+bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible) {
     short
         row2 = 0,
         col2 = 0,

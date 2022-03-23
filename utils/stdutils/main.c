@@ -13,7 +13,7 @@ const time_t getCurrentDateTime(bool isStartTime) {
     return now;
 }
 
-void printRow(bool isUp) {
+void printChessBoardRow(bool isUp) {
     unsigned short i = 0;
     isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
     for (; i < N; i++)
@@ -21,11 +21,11 @@ void printRow(bool isUp) {
     wprintf(L"\n");
 }
 
-void printChessBoard(wchar_t** chessBoard) {
+void printChessBoard(ChessBoard chessBoard) {
     unsigned short
         i = 0,
         j = 0;
-    printRow(true);
+    printChessBoardRow(true);
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
             if (j == 0)
@@ -38,19 +38,19 @@ void printChessBoard(wchar_t** chessBoard) {
                 wprintf(L"\n");
         }
     }
-    printRow(false);
+    printChessBoardRow(false);
     wprintf(L"\n");
 }
 
-wchar_t** chessBoardCalloc() {
-	wchar_t** m = calloc(N, sizeof(wchar_t*));
+ChessBoard chessBoardCalloc() {
+	ChessBoard m = calloc(N, sizeof(wchar_t*));
 	unsigned short row = 0;
 	for(; row < N; row++) 
 		m[row] = calloc(N, sizeof(wchar_t));
 	return m;
 }
 
-void chessBoardDealloc(wchar_t** chessBoard) {
+void chessBoardDealloc(ChessBoard chessBoard) {
 	unsigned short row = 0;
 	for(; row < N; row++)
 		free(chessBoard[row]);

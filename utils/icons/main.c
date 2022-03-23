@@ -67,7 +67,7 @@ void printIconStringName(wchar_t icon) {
     }
 }
 
-void pawnTransition(wchar_t** chessBoard, Point *p, bool isBlack) {
+void pawnTransition(ChessBoard chessBoard, Point *p, bool isBlack) {
 	short pawnChoice = 0;
 	sound(6);
 	wprintf(L"\nScegli in cosa vuoi trasformare il pedone: \n");
@@ -105,7 +105,7 @@ void pawnTransition(wchar_t** chessBoard, Point *p, bool isBlack) {
 	printIconStringName(newIcon);
 }
 
-const unsigned short countBlackIcons(wchar_t** chessBoard) {
+const unsigned short countBlackIcons(ChessBoard chessBoard) {
 	unsigned short
 		i = 0,
 		j = 0,
@@ -121,7 +121,7 @@ const unsigned short countBlackIcons(wchar_t** chessBoard) {
 	return count;
 }
 
-const unsigned short countWhiteIcons(wchar_t** chessBoard) {
+const unsigned short countWhiteIcons(ChessBoard chessBoard) {
 	unsigned short
 		i = 0,
 		j = 0,

@@ -2,7 +2,7 @@
 #define __CHESSBOARD_H_
 
 
-void defineChessBoardMatrix(wchar_t** chessBoard);
+void defineChessBoardMatrix(ChessBoard chessBoard);
 
 /* 
     SPECIFICS:
@@ -12,7 +12,7 @@ void defineChessBoardMatrix(wchar_t** chessBoard);
         * Output: a boolean value named "hasWin".
         * Post-condition: hasWin holds true if a player eats the opponent's queen.
 */
-bool playerTurn(wchar_t** chessBoard, Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible);
+bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible);
 
 
 #endif
