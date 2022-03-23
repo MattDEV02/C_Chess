@@ -1,7 +1,7 @@
 #ifndef __ICONS_H_
 #define __ICONS_H_
 
-#define FILLED_SQUARE 0x25A0
+#define FILLED_SQUARE 0x25A0 
 #define EMPTY_SQUARE  0x25A1
 #define BLACK_QUEEN   0x2654
 #define BLACK_KING    0x2655
@@ -9,7 +9,8 @@
 #define BLACK_BISHOP  0x2657
 #define BLACK_HORSE   0x2658
 #define BLACK_PAWN    0x2659
-
+// FILLED_SQUARE is the white square
+// EMPTY_SQUARE is the black square
 
 wchar_t getWhiteIcon(wchar_t black_icon);
 
@@ -31,11 +32,11 @@ bool isEqualColor(wchar_t icon1, wchar_t icon2);
 
 void printIconStringName(wchar_t icon);
 
-void pawnTransition(wchar_t chessBoard[N][N], Point* p, bool isBlack);
+void pawnTransition(wchar_t** chessBoard, Point* p, bool isBlack);
 
-const unsigned short countBlackIcons(wchar_t chessBoard[N][N]);
+const unsigned short countBlackIcons(wchar_t** chessBoard);
 
-const unsigned short countWhiteIcons(wchar_t chessBoard[N][N]);
+const unsigned short countWhiteIcons(wchar_t** chessBoard);
 
 const float iconPercentage(unsigned short remainingIcons);
 

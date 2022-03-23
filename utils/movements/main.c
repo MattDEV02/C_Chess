@@ -4,11 +4,11 @@
 #include "main.h"
 
 
-bool isBlackPawnDiaogonalMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+bool isBlackPawnDiaogonalMovement(wchar_t** chessBoard, Point* p1, Point* p2) {
     return !isFreePosition(chessBoard[p2->row][p2->col]) && (p1->row + p1->col - 2 == p2->row + p2->col || p1->row + p1->col == p2->row + p2->col) && (p1->row != p2->row && p1->col != p2->col);
 }
 
-bool isWhitePawnDiaogonalMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+bool isWhitePawnDiaogonalMovement(wchar_t** chessBoard, Point* p1, Point* p2) {
     return !isFreePosition(chessBoard[p2->row][p2->col]) && (p1->row + p1->col + 2 == p2->row + p2->col || p1->row + p1->col == p2->row + p2->col) && (p1->row != p2->row && p1->col != p2->col);
 }
 
@@ -53,7 +53,7 @@ bool isQueenMovement(Point* p1, Point* p2) {
         (p1->row + p1->col == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col);
 }
 
-bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+bool move(wchar_t** chessBoard, Point* p1, Point* p2) {
     const wchar_t 
 		icon1 = chessBoard[p1->row][p1->col],	
 		icon2 = chessBoard[p2->row][p2->col];
@@ -72,7 +72,7 @@ bool move(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
     return isQueen(icon2);
 }
 
-bool isCastlingMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+bool isCastlingMovement(wchar_t** chessBoard, Point* p1, Point* p2) {
 	return 
 		isQueen(chessBoard[p1->row][p1->col]) &&
 		(p1->row == p2->row && (p1->row == 0 || p1->row == 7)) &&
@@ -83,7 +83,7 @@ bool isCastlingMovement(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
 		isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2->row][p2->col + 1]);
 }
 
-void castling(wchar_t chessBoard[N][N], Point* p1, Point* p2) {
+void castling(wchar_t** chessBoard, Point* p1, Point* p2) {
 	Point towerPoint;
 	towerPoint.row = p1->row;
 	towerPoint.col = p2->col + 1;

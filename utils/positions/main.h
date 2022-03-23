@@ -22,7 +22,7 @@ bool isEmptySquarePosition(Point* p);
 
 bool isFreePosition(wchar_t icon);
 
-void defineSquare(wchar_t chessBoard[N][N], Point *p);
+void defineSquare(wchar_t** chessBoard, Point *p);
 
 
 #endif

@@ -21,7 +21,7 @@ void printRow(bool isUp) {
     wprintf(L"\n");
 }
 
-void printMatrix(wchar_t matrix[N][N]) {
+void printChessBoard(wchar_t** chessBoard) {
     unsigned short
         i = 0,
         j = 0;
@@ -29,17 +29,32 @@ void printMatrix(wchar_t matrix[N][N]) {
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++) {
             if (j == 0)
-                wprintf(L"\t%i | %lc ", i, matrix[i][j]);
+                wprintf(L"\t%i | %lc ", i, chessBoard[i][j]);
             else if (j == N - 1)
-                wprintf(L" %lc | %i", matrix[i][j], i);
+                wprintf(L" %lc | %i", chessBoard[i][j], i);
             else
-                wprintf(L" %lc ", matrix[i][j]);
+                wprintf(L" %lc ", chessBoard[i][j]);
             if (j == N - 1 && i < N - 1)
                 wprintf(L"\n");
         }
     }
     printRow(false);
     wprintf(L"\n");
+}
+
+wchar_t** chessBoardCalloc() {
+	wchar_t** m = calloc(N, sizeof(wchar_t*));
+	unsigned short row = 0;
+	for(; row < N; row++) 
+		m[row] = calloc(N, sizeof(wchar_t));
+	return m;
+}
+
+void chessBoardDealloc(wchar_t** chessBoard) {
+	unsigned short row = 0;
+	for(; row < N; row++)
+		free(chessBoard[row]);
+	free(chessBoard);
 }
 
 unsigned short setCoordinate(int x) {
@@ -54,7 +69,6 @@ unsigned short setCoordinate(int x) {
 const double dabs(double value) {
     return value >= 0 ? value : (-1 * value);
 }
-
 
 void sound(unsigned short times) {
 	unsigned short i = 0;

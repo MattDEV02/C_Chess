@@ -14,15 +14,21 @@
 
 
 typedef struct Point {
-	short row; // x coordinate
-	short col;// y coordinate
+	short row; // y coordinate
+	short col; // x coordinate
 } Point; 
+
+typedef wchar_t** ChessBoard;
 
 const time_t getCurrentDateTime(bool isStartTime);
 
 void printRow(bool isUp);
 
-void printMatrix(wchar_t matrix[N][N]);
+void printChessBoard(wchar_t** chessBoard);
+
+wchar_t** chessBoardCalloc();
+
+void chessBoardDealloc(ChessBoard chessBoard);
 
 unsigned short setCoordinate(int x);
 

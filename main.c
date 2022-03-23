@@ -17,6 +17,7 @@
         },
         "scripts": {
             "build": "gcc main.c utils/stdutils/main.c utils/positions/main.c utils/icons/main.c utils/movements/main.c utils/chessboard/main.c -o main",
+			"build2": "clang-7 -pthread -lm -o main main.c utils/stdutils/main.c utils/positions/main.c utils/icons/main.c utils/movements/main.c utils/chessboard/main.c",
             "exec": "./main",
             "start": "gcc main.c utils/stdutils/main.c utils/positions/main.c utils/icons/main.c utils/movements/main.c utils/chessboard/main.c -o main && ./main"
         },
@@ -26,7 +27,8 @@
             "C Matrixs",
             "C Structs",
 			"C Pointers",
-			"C DateTimes"
+			"C DateTimes",
+			"Bash"
         ]
     }
 */
@@ -67,13 +69,13 @@ int main(void) {
 		player = 0,
         winner = 0;
 	Point p1;
-    wchar_t chessBoard[N][N]; // 8 x 8
+    wchar_t** chessBoard = chessBoardCalloc(); // 8 x 8
     defineChessBoardMatrix(chessBoard);
     const time_t startTime = getCurrentDateTime(true);
     while((player < 2) && !hasWin) { 
         do {
             wprintf(L"\nTurno giocatore %i, colore %ls, mossa totale numero %d:\n \n", player + 1, player == 1 ? L"neri" : L"bianchi", movesCounter + 1);
-            printMatrix(chessBoard);
+            printChessBoard(chessBoard);
             wprintf(L"\n \nGiocatore %i Inserisci la riga attuale: ", player + 1);
             scanf("%hu", &(row1));
             wprintf(L"\nGiocatore %i Inserisci la colonna attuale: ", player + 1);
@@ -105,7 +107,7 @@ int main(void) {
             player = 0;
     } 
     sound(6); // linux bell sound
-    printMatrix(chessBoard);
+    printChessBoard(chessBoard);
     wprintf(L"\n \nVincitore: giocatore %i (%ls) in %d mosse totali.\n", winner, winner == 1 ? L"bianchi" : L"neri", movesCounter);
     const time_t endTime = getCurrentDateTime(false);
     const double secondsTimeDiff = dabs(difftime(endTime, startTime));
@@ -113,6 +115,7 @@ int main(void) {
 		remainingIcons = countBlackIcons(chessBoard);
 	else if(winner == 2) 
 		remainingIcons = countWhiteIcons(chessBoard);
+	chessBoardDealloc(chessBoard); 
     wprintf(L"\nMosse totali per secondo: %g (%g secondi = %g minuti) ; %g %c pedine avversarie mangiate.\n \n \n", secondsTimeDiff / movesCounter, secondsTimeDiff, secondsTimeDiff / 60, iconPercentage(remainingIcons), 37);
     return EXIT_SUCCESS;
 }
