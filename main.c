@@ -27,9 +27,15 @@
             "C Matrixs",
             "C Structs",
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"C Pointers",
 			"C DateTimes",
 			"Bash"
+=======
+	    "C Pointers",
+	    "C DateTimes",
+	    "Bash"
+>>>>>>> origin/main
 =======
 	    "C Pointers",
 	    "C DateTimes",
