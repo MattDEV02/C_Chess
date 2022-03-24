@@ -174,7 +174,9 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
         if(isBishop(chessBoard[p1->row][p1->col])) {
             if(isBlack(chessBoard[p1->row][p1->col])) {
                 if(isBishopMovement(p1, &(p2))) {
+					
                     if(isFreePosition(chessBoard[p2.row][p2.col]) || !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
+						wprintf(L"Alfiere");
                         badMove = false;
                         if(p1->row > p2.row && p1->col > p2.col) {
                             for(i = p1->row - 1, j = p1->col - 1; ((i >= p2.row + 1) || (j >= p2.col + 1)) && !badMove; i--, j--) {

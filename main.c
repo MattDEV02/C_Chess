@@ -52,7 +52,7 @@
 #include "utils/movements/main.h"
 #include "utils/chessboard/main.h"
 
-// (7, 3) ==> (4, 4)
+
 int main(void) { 
     setlocale(LC_ALL, "");
     bool 
@@ -72,7 +72,7 @@ int main(void) {
     ChessBoard chessBoard = chessBoardCalloc(); // 8 x 8
     defineChessBoardMatrix(chessBoard);
     const time_t startTime = getCurrentDateTime(true);
-    while((player < 2) && !hasWin) { 
+    while((player < 2) && !hasWin) { // 2 is the number of players
         do {
             wprintf(L"\nTurno giocatore %i, colore %ls, mossa totale numero %d:\n \n", player + 1, player == 1 ? L"neri" : L"bianchi", movesCounter + 1);
             printChessBoard(chessBoard);

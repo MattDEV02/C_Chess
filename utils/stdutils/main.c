@@ -3,12 +3,12 @@
 
 
 const time_t getCurrentDateTime(bool isStartTime) {
-    const size_t buffer_dim = 30;
-    char dateTimeStringBuffer[buffer_dim];
+    const size_t bufferDim = 30;
+    char dateTimeStringBuffer[bufferDim];
     const time_t now = time(NULL);
     struct tm* restrict time_info = localtime(&(now));
     time_info->tm_hour += 1; 
-    strftime(dateTimeStringBuffer, buffer_dim, "%Y-%m-%d %H:%M:%S", time_info);
+    strftime(dateTimeStringBuffer, bufferDim, "%Y-%m-%d %H:%M:%S", time_info);
     wprintf(L"\nGame %ls time = %s\n", isStartTime ? L"start" : L"end", dateTimeStringBuffer);
     return now;
 }
@@ -44,9 +44,14 @@ void printChessBoard(ChessBoard chessBoard) {
 
 ChessBoard chessBoardCalloc() {
 	ChessBoard m = calloc(N, sizeof(wchar_t*));
-	unsigned short row = 0;
-	for(; row < N; row++) 
-		m[row] = calloc(N, sizeof(wchar_t));
+	if(m != NULL) {
+		unsigned short row = 0;
+		for(; row < N; row++) 
+			m[row] = calloc(N, sizeof(wchar_t));
+	} else {
+		wprintf(L"\nErrore: Memoria heap per la scacchiera non allocata.\n");
+		exit(EXIT_FAILURE);
+	}
 	return m;
 }
 
