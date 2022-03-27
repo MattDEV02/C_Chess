@@ -2,9 +2,17 @@
 #define __MOVEMENTS_H_
 
 
-bool isBlackPawnDiaogonalMovement(ChessBoard chessBoard, Point* p1, Point* p2);
+bool isBlackPawnFrontalMovement(Point* p1, Point *p2);
 
-bool isWhitePawnDiaogonalMovement(ChessBoard chessBoard, Point* p1, Point* p2);
+bool isWhitePawnFrontalMovement(Point *p1, Point *p2);
+
+bool isBlackPawnDualFrontalMovement(Point* p1, Point *p2);
+
+bool isWhitePawnDualFrontalMovement(Point *p1, Point *p2);
+
+bool isBlackPawnDiagonalMovement(ChessBoard chessBoard, Point* p1, Point* p2);
+
+bool isWhitePawnDiagonalMovement(ChessBoard chessBoard, Point* p1, Point* p2);
 
 bool isHorseMovement(Point* p1, Point* p2);
 

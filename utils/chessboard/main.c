@@ -65,7 +65,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
             if (isBlack(chessBoard[p1->row][p1->col])) {
                 if (p1->row == N - 2) {
                     if(isFreePosition(chessBoard[p2.row][p2.col])) {
-                        if((p2.row == p1->row - 1 || p2.row == p1->row - 2) && p1->col == p2.col) {
+                        if(isBlackPawnDualFrontalMovement(p1, &(p2))) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));
                         } else {
@@ -73,7 +73,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (pedone nero), riprova.\n");
                         }
                     } else {
-                        if(isBlackPawnDiaogonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
+                        if(isBlackPawnDiagonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));   
                         } else {
@@ -83,7 +83,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                     }  
                 } else {
                     if(isFreePosition(chessBoard[p2.row][p2.col])) {
-                        if(p2.row == p1->row - 1 && p1->col == p2.col) {
+                        if(isBlackPawnFrontalMovement(p1, &(p2))) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));
                         } else {
@@ -91,7 +91,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (pedone nero), riprova.\n");   
                         }
                     } else {
-                        if(isBlackPawnDiaogonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
+                        if(isBlackPawnDiagonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));   
                         } else {
@@ -103,7 +103,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
             } else {
                 if (p1->row == 1) {
                     if(isFreePosition(chessBoard[p2.row][p2.col])) {
-                        if((p2.row == p1->row + 1 || p2.row == p1->row + 2) && p1->col == p2.col) {
+                        if(isWhitePawnDualFrontalMovement(p1, &(p2))) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));
                         } else {
@@ -111,7 +111,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (pedone bianco), riprova.\n");
                         }
                     } else {
-                        if(isWhitePawnDiaogonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
+                        if(isWhitePawnDiagonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));   
                         } else {
@@ -121,7 +121,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                     }  
                 } else {
                     if(isFreePosition(chessBoard[p2.row][p2.col])) {
-                        if(p2.row == p1->row + 1 && p1->col == p2.col) {
+                        if(isWhitePawnFrontalMovement(p1, &(p2))) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));
                         } else {
@@ -129,7 +129,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (pedone bianco), riprova.\n");   
                         }
                     } else {
-                        if(isWhitePawnDiaogonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
+                        if(isWhitePawnDiagonalMovement(chessBoard, p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
                             badMove = false;
                             hasWin = move(chessBoard, p1, &(p2));   
                         } else {

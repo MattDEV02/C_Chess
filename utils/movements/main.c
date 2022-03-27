@@ -4,19 +4,49 @@
 #include "main.h"
 
 
-bool isBlackPawnDiaogonalMovement(ChessBoard chessBoard, Point* p1, Point* p2) {
-    return (
-		!isFreePosition(chessBoard[p2->row][p2->col]) && 
-		(p1->row + p1->col - 2 == p2->row + p2->col || p1->row + p1->col == p2->row + p2->col) && 
-		(p1->row != p2->row && p1->col != p2->col)
+bool isBlackPawnFrontalMovement(Point* p1, Point *p2) {
+	return (
+		(p2->row == p1->row - 1) && 
+		(p1->col == p2->col)
+	);	
+}
+
+bool isWhitePawnFrontalMovement(Point *p1, Point *p2) {
+	return (
+		(p2->row == p1->row + 1) && 
+		(p1->col == p2->col)
+	);	
+}
+
+bool isBlackPawnDualFrontalMovement(Point* p1, Point* p2) {
+	return (
+		(p2->row == p1->row - 1 || p2->row == p1->row - 2) && 
+		(p1->col == p2->col)
 	);
 }
 
-bool isWhitePawnDiaogonalMovement(ChessBoard chessBoard, Point* p1, Point* p2) {
+bool isWhitePawnDualFrontalMovement(Point* p1, Point* p2) {
+	return (
+		(p2->row == p1->row + 1 || p2->row == p1->row + 2) && 
+		(p1->col == p2->col)
+	);
+}
+	 
+bool isBlackPawnDiagonalMovement(ChessBoard chessBoard, Point* p1, Point* p2) {
     return (
 		!isFreePosition(chessBoard[p2->row][p2->col]) && 
-		(p1->row + p1->col + 2 == p2->row + p2->col || p1->row + p1->col == p2->row + p2->col) && 
-		(p1->row != p2->row && p1->col != p2->col)
+		(p1->row + p1->col == p2->row + p2->col + 2 || p1->row + p1->col == p2->row + p2->col) && 
+		(p1->row != p2->row && p1->col != p2->col) &&
+		(p1->row > p2->row)
+	);
+}
+
+bool isWhitePawnDiagonalMovement(ChessBoard chessBoard, Point* p1, Point* p2) {
+    return (
+		!isFreePosition(chessBoard[p2->row][p2->col]) && 
+		(p1->row + p1->col == p2->row + p2->col - 2 || p1->row + p1->col == p2->row + p2->col) && 
+		(p1->row != p2->row && p1->col != p2->col) &&
+		(p1->row < p2->row)
 	);
 }
 
@@ -37,8 +67,8 @@ bool isBishopMovement(Point* p1, Point* p2) {
     return (
 		((p1->row + p1->col - p2->row + p2->col) % 2 == 0) && 
 		(p1->row != p2->row && p1->col != p2->col) &&
-		!isHorseMovement(p1, p2) &&
-		(sabs(p1->row - p2->row) == sabs(p1->col - p2->col))
+		(sabs(p1->row - p2->row) == sabs(p1->col - p2->col)) &&
+		!isHorseMovement(p1, p2)
 	);
 }
 

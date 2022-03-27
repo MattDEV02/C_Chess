@@ -71,6 +71,9 @@ int main(void) {
 	Point p1;
     ChessBoard chessBoard = chessBoardCalloc(); // 8 x 8 wchar_t matrix
     defineChessBoardMatrix(chessBoard);
+	chessBoard[0][0] = (BLACK_PAWN);
+	chessBoard[0][1] = (BLACK_PAWN);
+	chessBoard[0][2] = (BLACK_PAWN);
     const time_t startTime = getCurrentDateTime(true);
     while((player < 2) && !hasWin) { // 2 is the number of players
         do {
