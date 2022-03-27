@@ -57,9 +57,7 @@ int main(void) {
     setlocale(LC_ALL, "");
     bool 
         hasWin = false,
-        badMove = false,
-		isBlackCastlingPossible = true, 
-		isWhiteCastlingPossible = true;
+        badMove = false;
 	unsigned int movesCounter = 0;
     short
         row1 = 0,
@@ -98,7 +96,7 @@ int main(void) {
 		p1.col = col1;
         wprintf(L"\nPosizione di partenza: %lc ; colore: %ls ; (%i, %i) ; ", chessBoard[row1][col1], isBlack(chessBoard[row1][col1]) ? L"nero" : L"bianco", row1, col1);
         printIconStringName(chessBoard[row1][col1]);
-        hasWin = playerTurn(chessBoard, &(p1), &(isBlackCastlingPossible), &(isWhiteCastlingPossible));
+        hasWin = playerTurn(chessBoard, &(p1));
         winner = player + 1;
         movesCounter++;
         if(player == 0)

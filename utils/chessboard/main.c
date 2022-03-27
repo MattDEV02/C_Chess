@@ -40,7 +40,7 @@ void defineChessBoardMatrix(ChessBoard chessBoard) {
         * Output: a boolean value named "hasWin".
         * Post-condition: hasWin holds true if a player eats the opponent's queen.
 */
-bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible) {
+bool playerTurn(ChessBoard chessBoard, Point* p1) {
     short
         row2 = 0,
         col2 = 0,
@@ -49,6 +49,9 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
     bool 
         badMove = false,
         hasWin = false;
+	static bool
+		isBlackCastlingPossible = true,
+		isWhiteCastlingPossible = true;
     do { 
         if(badMove)
             printChessBoard(chessBoard);
@@ -174,7 +177,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                 if(isBishopMovement(p1, &(p2))) {
 					
                     if(isFreePosition(chessBoard[p2.row][p2.col]) || !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
-						wprintf(L"Alfiere");
+					
                         badMove = false;
                         if(p1->row > p2.row && p1->col > p2.col) {
                             for(i = p1->row - 1, j = p1->col - 1; ((i >= p2.row + 1) || (j >= p2.col + 1)) && !badMove; i--, j--) {
@@ -302,7 +305,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre nera frontale), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isBlackCastlingPossible = false;
+							isBlackCastlingPossible = false;
 						}
                     } else if(p1->row < p2.row && p1->col == p2.col) {
                         badMove = false;
@@ -315,7 +318,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre nera retro), riprova.\n");
                         else { 
 							hasWin = move(chessBoard, p1, &(p2));
-							*isBlackCastlingPossible = false;
+							isBlackCastlingPossible = false;
 						}
                     } else if(p1->row == p2.row && p1->col > p2.col) {
                         badMove = false;
@@ -327,7 +330,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre nera sx), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isBlackCastlingPossible = false;
+							isBlackCastlingPossible = false;
 						}    
                     } else if(p1->row == p2.row && p1->col < p2.col) {
                         badMove = false;
@@ -339,7 +342,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre nera dx), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isBlackCastlingPossible = false;
+							isBlackCastlingPossible = false;
 						}
                     }
                 } else {
@@ -358,7 +361,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre bianca retro), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isWhiteCastlingPossible = false;
+							isWhiteCastlingPossible = false;
 						}
                     } else if(p1->row < p2.row && p1->col == p2.col) {
                         badMove = false;
@@ -370,7 +373,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre bianca frontale), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isWhiteCastlingPossible = false;
+							isWhiteCastlingPossible = false;
 						}
                     } else if(p1->row == p2.row && p1->col > p2.col) {
                         badMove = false;
@@ -382,7 +385,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre bianca sx), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isWhiteCastlingPossible = false;
+							isWhiteCastlingPossible = false;
 						}
                     } else if(p1->row == p2.row && p1->col < p2.col) {
                         badMove = false;
@@ -394,7 +397,7 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                             wprintf(L"\nMossa non valida (torre bianca dx), riprova.\n");
                         else {
 							hasWin = move(chessBoard, p1, &(p2));
-							*isWhiteCastlingPossible = false;
+							isWhiteCastlingPossible = false;
 						}
                     }
                 } else {
@@ -601,12 +604,12 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                 if(isQueenMovement(p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
 					badMove = false;
                     hasWin = move(chessBoard, p1, &(p2));
-					*isBlackCastlingPossible = false;
-                } else if(isCastlingMovement(chessBoard, p1, &(p2)) && *isBlackCastlingPossible) {
+					isBlackCastlingPossible = false;
+                } else if(isCastlingMovement(chessBoard, p1, &(p2)) && isBlackCastlingPossible) {
 					// arrocco nero
 					badMove = false;
                     castling(chessBoard, p1, &(p2));
-					*isBlackCastlingPossible = false;
+					isBlackCastlingPossible = false;
 					wprintf(L"\nArrocco nero eseguito !\n");
 				} else {
                     badMove = true;
@@ -616,12 +619,12 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
                 if(isQueenMovement(p1, &(p2)) && !isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2.row][p2.col])) {
 					badMove = false;
                     hasWin = move(chessBoard, p1, &(p2));
-					*isWhiteCastlingPossible = false;
-                } else if(isCastlingMovement(chessBoard, p1, &(p2)) && *isWhiteCastlingPossible) {
+					isWhiteCastlingPossible = false;
+                } else if(isCastlingMovement(chessBoard, p1, &(p2)) && isWhiteCastlingPossible) {
 					// arrocco bianco
 					badMove = false;
                     castling(chessBoard, p1, &(p2));
-					*isWhiteCastlingPossible = false;
+					isWhiteCastlingPossible = false;
 					wprintf(L"\nArrocco bianco eseguito !\n");
 				} else {
                     badMove = true;

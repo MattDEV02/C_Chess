@@ -139,5 +139,6 @@ void castling(ChessBoard chessBoard, Point* p1, Point* p2) {
 		tower = chessBoard[p2->row][p2->col + 1];
 	chessBoard[p2->row][p2->col] = queen;
 	chessBoard[p1->row][p1->col + 1] = tower;
+	defineSquare(chessBoard, p1);
 	defineSquare(chessBoard, &(towerPoint));
 }

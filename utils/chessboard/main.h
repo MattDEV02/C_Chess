@@ -12,7 +12,7 @@ void defineChessBoardMatrix(ChessBoard chessBoard);
         * Output: a boolean value named "hasWin".
         * Post-condition: hasWin holds true if a player eats the opponent's queen.
 */
-bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible, bool* isWhiteCastlingPossible);
+bool playerTurn(ChessBoard chessBoard, Point* p1);
 
 
 #endif
