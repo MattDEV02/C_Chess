@@ -35,15 +35,18 @@ bool isQueen(wchar_t icon) {
 }
 
 bool isBlack(wchar_t icon) {
-    return (icon >= BLACK_QUEEN && icon <= BLACK_PAWN) && !isFreePosition(icon);
+    return (
+		(icon >= BLACK_QUEEN && icon <= BLACK_PAWN) && 
+		!isFreePosition(icon)
+	);
 }
 
 bool isEqualColor(wchar_t icon1, wchar_t icon2) {
-    return 
+    return (
         (!isFreePosition(icon1) && !isFreePosition(icon2)) && (  
         (isBlack(icon1) && isBlack(icon2)) ||
         (!isBlack(icon1) && !isBlack(icon2))
-    );
+    ));
 }
 
 void printIconStringName(wchar_t icon) { 

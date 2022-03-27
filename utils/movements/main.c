@@ -35,8 +35,10 @@ bool isHorseMovement(Point* p1, Point* p2) {
 
 bool isBishopMovement(Point* p1, Point* p2) {
     return (
-		((p1->row + p1->col - p2->row + p2->col) % 2 == 0)&& 
-		(p1->row != p2->row && p1->col != p2->col)
+		((p1->row + p1->col - p2->row + p2->col) % 2 == 0) && 
+		(p1->row != p2->row && p1->col != p2->col) &&
+		!isHorseMovement(p1, p2) &&
+		(sabs(p1->row - p2->row) == sabs(p1->col - p2->col))
 	);
 }
 

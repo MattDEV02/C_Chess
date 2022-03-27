@@ -52,10 +52,8 @@ bool playerTurn(ChessBoard chessBoard, Point* p1, bool* isBlackCastlingPossible,
     do { 
         if(badMove)
             printChessBoard(chessBoard);
-        wprintf(L"\nInserisci la riga dove vuoi arrivare: ");
-        scanf("%hu", &(row2));
-        wprintf(L"\nInserisci la colonna dove vuoi arrivare: ");
-        scanf("%hu", &(col2));
+		row2 = shortReader(row2, L"\nInserisci la riga dove vuoi arrivare: ");
+		col2 = shortReader(col2, L"\nInserisci la colonna dove vuoi arrivare: ");
         row2 = setCoordinate(row2);
         col2 = setCoordinate(col2);
 		Point p2;

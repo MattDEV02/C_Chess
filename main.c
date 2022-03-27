@@ -69,7 +69,7 @@ int main(void) {
 		player = 0,
         winner = 0;
 	Point p1;
-    ChessBoard chessBoard = chessBoardCalloc(); // 8 x 8
+    ChessBoard chessBoard = chessBoardCalloc(); // 8 x 8 wchar_t matrix
     defineChessBoardMatrix(chessBoard);
     const time_t startTime = getCurrentDateTime(true);
     while((player < 2) && !hasWin) { // 2 is the number of players
@@ -77,9 +77,9 @@ int main(void) {
             wprintf(L"\nTurno giocatore %i, colore %ls, mossa totale numero %d:\n \n", player + 1, player == 1 ? L"neri" : L"bianchi", movesCounter + 1);
             printChessBoard(chessBoard);
             wprintf(L"\n \nGiocatore %i Inserisci la riga attuale: ", player + 1);
-            scanf("%hu", &(row1));
+            row1 = shortReader(row1, L"\0");
             wprintf(L"\nGiocatore %i Inserisci la colonna attuale: ", player + 1);
-            scanf("%hu", &(col1));
+            col1 = shortReader(col1, L"\0");
             row1 = setCoordinate(row1);
             col1 = setCoordinate(col1);
             if(player == 0 && isBlack(chessBoard[row1][col1])) {

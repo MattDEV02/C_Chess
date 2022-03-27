@@ -12,23 +12,38 @@ bool isPawnPosition(short row) {
 }
 
 bool isHorsePosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 1 || p->col == 6);
+    return (
+		(p->row == 0 || p->row == 7) && 
+		(p->col == 1 || p->col == 6)
+	);
 }
 
 bool isBishopPosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 2 || p->col == 5);
+    return (
+		(p->row == 0 || p->row == 7) && 
+		(p->col == 2 || p->col == 5)
+	);
 }
 
 bool isTowerPosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 0 || p->col == 7);
+    return (
+		(p->row == 0 || p->row == 7) && 
+		(p->col == 0 || p->col == 7)
+	);
 }
 
 bool isKingPosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 3);
+    return (
+		(p->row == 0 || p->row == 7) && 
+		(p->col == 3)
+	);
 }
 
 bool isQueenPosition(Point* p) {
-    return (p->row == 0 || p->row == 7) && (p->col == 4);
+    return (
+		(p->row == 0 || p->row == 7) && 
+		(p->col == 4)
+	);
 }
 
 bool isEmptyPosition(short row) {

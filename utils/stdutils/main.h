@@ -22,6 +22,8 @@ typedef wchar_t** ChessBoard;
 
 const time_t getCurrentDateTime(bool isStartTime);
 
+short shortReader(short integer, wchar_t* prompt);
+
 void printChessBoardRow(bool isUp);
 
 void printChessBoard(ChessBoard chessBoard);
@@ -31,6 +33,8 @@ ChessBoard chessBoardCalloc();
 void chessBoardDealloc(ChessBoard chessBoard);
 
 unsigned short setCoordinate(int x);
+
+const short sabs(short value); // abs function for short type values
 
 const double dabs(double value); // abs function for double type values
 

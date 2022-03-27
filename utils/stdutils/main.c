@@ -13,6 +13,12 @@ const time_t getCurrentDateTime(bool isStartTime) {
     return now;
 }
 
+short shortReader(short integer, wchar_t* prompt) {
+	wprintf(prompt);
+	scanf("%hu", &(integer));
+	return integer;
+};
+
 void printChessBoardRow(bool isUp) {
     unsigned short i = 0;
     isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
@@ -71,8 +77,12 @@ unsigned short setCoordinate(int x) {
         return x;
 }
 
-const double dabs(double value) {
+const short sabs(short value) {
     return value >= 0 ? value : (-1 * value);
+}
+
+const double dabs(double value) {
+    return value >= 0.0 ? value : (-1.0 * value);
 }
 
 void sound(unsigned short times) {
