@@ -1,6 +1,12 @@
 #ifndef __ICONS_H_
 #define __ICONS_H_
 
+
+#include "../stdutils/main.h"
+#include "../icons/main.h"
+#include "../movements/main.h"
+#include "../positions/main.h"
+
 #define FILLED_SQUARE 0x25A0 
 #define EMPTY_SQUARE  0x25A1
 #define BLACK_QUEEN   0x2654
@@ -11,6 +17,7 @@
 #define BLACK_PAWN    0x2659
 // FILLED_SQUARE is the white square
 // EMPTY_SQUARE is the black square
+
 
 wchar_t getWhiteIcon(wchar_t black_icon);
 

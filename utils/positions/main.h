@@ -2,6 +2,10 @@
 #define __POSITIONS_H_
 
 
+#include "../stdutils/main.h"
+#include "../icons/main.h"
+
+
 bool isBlackPosition(short row);
 
 bool isPawnPosition(short row);

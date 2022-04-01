@@ -1,6 +1,3 @@
-#include "../stdutils/main.h"
-#include "../positions/main.h"
-#include "../icons/main.h"
 #include "main.h"
 
 

@@ -44,7 +44,6 @@
 */
 
 
-#include <stdlib.h>
 #include <locale.h>
 #include "utils/stdutils/main.h"
 #include "utils/positions/main.h"

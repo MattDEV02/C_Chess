@@ -2,6 +2,11 @@
 #define __MOVEMENTS_H_
 
 
+#include "../stdutils/main.h"
+#include "../positions/main.h"
+#include "../icons/main.h"
+
+
 bool isBlackPawnFrontalMovement(Point* p1, Point *p2);
 
 bool isWhitePawnFrontalMovement(Point *p1, Point *p2);

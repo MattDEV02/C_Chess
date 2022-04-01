@@ -2,6 +2,12 @@
 #define __CHESSBOARD_H_
 
 
+#include "../stdutils/main.h"
+#include "../positions/main.h"
+#include "../icons/main.h"
+#include "../movements/main.h"
+
+
 void defineChessBoardMatrix(ChessBoard chessBoard);
 
 void printChessBoardRow(bool isUp);

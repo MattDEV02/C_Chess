@@ -1,5 +1,3 @@
-#include "../stdutils/main.h"
-#include "../icons/main.h"
 #include "main.h"
 
 

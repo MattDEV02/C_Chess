@@ -1,8 +1,3 @@
-#include <stdlib.h>
-#include "../stdutils/main.h"
-#include "../icons/main.h"
-#include "../movements/main.h"
-#include "../positions/main.h"
 #include "main.h"
 
 
