@@ -1,9 +1,59 @@
+#include <stdlib.h>
 #include "../stdutils/main.h"
 #include "../positions/main.h"
 #include "../icons/main.h"
 #include "../movements/main.h"
 #include "main.h"
 
+
+void printChessBoardRow(bool isUp) {
+    unsigned short i = 0;
+    isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
+    for (; i < N; i++)
+        wprintf(L" %i ", i);
+    wprintf(L"\n");
+}
+
+void printChessBoard(ChessBoard chessBoard) {
+    unsigned short
+        i = 0,
+        j = 0;
+    printChessBoardRow(true);
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
+            if (j == 0)
+                wprintf(L"\t%i | %lc ", i, chessBoard[i][j]);
+            else if (j == N - 1)
+                wprintf(L" %lc | %i", chessBoard[i][j], i);
+            else
+                wprintf(L" %lc ", chessBoard[i][j]);
+            if (j == N - 1 && i < N - 1)
+                wprintf(L"\n");
+        }
+    }
+    printChessBoardRow(false);
+    wprintf(L"\n");
+}
+
+ChessBoard chessBoardCalloc() {
+	ChessBoard chessBoard = calloc(N, sizeof(wchar_t*));
+	if(chessBoard != NULL) {
+		unsigned short row = 0;
+		for(; row < N; row++) 
+			chessBoard[row] = calloc(N, sizeof(wchar_t));
+	} else {
+		wprintf(L"\nErrore: Memoria heap per la scacchiera non allocata.\n");
+		exit(EXIT_FAILURE);
+	}
+	return chessBoard;
+}
+
+void chessBoardDealloc(ChessBoard chessBoard) {
+	unsigned short row = 0;
+	for(; row < N; row++)
+		free(chessBoard[row]);
+	free(chessBoard);
+}
 
 void defineChessBoardMatrix(ChessBoard chessBoard) {
     unsigned short
@@ -35,7 +85,7 @@ void defineChessBoardMatrix(ChessBoard chessBoard) {
 /* 
     SPECIFICS:
         * Description: function that, given as input a (8 * 8) wchar_t matrix and 2 points (coordinates of start and finish), allows one of the two players in the chess game to take his turns.
-        * Input: a (8 * 8) wchar_t matrix, the memory address of a Point (row, col), and the memory addresses of 2 boolean flags.
+        * Input: a (8 * 8) wchar_t matrix, the memory address of a Point (row, col).
         * Pre-condition: chessBoard must is a wchar_t (8 * 8) matrix, Point row and Point col between 0 and 7 (integers).
         * Output: a boolean value named "hasWin".
         * Post-condition: hasWin holds true if a player eats the opponent's queen.

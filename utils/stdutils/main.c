@@ -17,55 +17,6 @@ short shortReader(short integer, wchar_t* prompt) {
 	wprintf(prompt);
 	scanf("%hu", &(integer));
 	return integer;
-};
-
-void printChessBoardRow(bool isUp) {
-    unsigned short i = 0;
-    isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
-    for (; i < N; i++)
-        wprintf(L" %i ", i);
-    wprintf(L"\n");
-}
-
-void printChessBoard(ChessBoard chessBoard) {
-    unsigned short
-        i = 0,
-        j = 0;
-    printChessBoardRow(true);
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            if (j == 0)
-                wprintf(L"\t%i | %lc ", i, chessBoard[i][j]);
-            else if (j == N - 1)
-                wprintf(L" %lc | %i", chessBoard[i][j], i);
-            else
-                wprintf(L" %lc ", chessBoard[i][j]);
-            if (j == N - 1 && i < N - 1)
-                wprintf(L"\n");
-        }
-    }
-    printChessBoardRow(false);
-    wprintf(L"\n");
-}
-
-ChessBoard chessBoardCalloc() {
-	ChessBoard m = calloc(N, sizeof(wchar_t*));
-	if(m != NULL) {
-		unsigned short row = 0;
-		for(; row < N; row++) 
-			m[row] = calloc(N, sizeof(wchar_t));
-	} else {
-		wprintf(L"\nErrore: Memoria heap per la scacchiera non allocata.\n");
-		exit(EXIT_FAILURE);
-	}
-	return m;
-}
-
-void chessBoardDealloc(ChessBoard chessBoard) {
-	unsigned short row = 0;
-	for(; row < N; row++)
-		free(chessBoard[row]);
-	free(chessBoard);
 }
 
 unsigned short setCoordinate(int x) {
