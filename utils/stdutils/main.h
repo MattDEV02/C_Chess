@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <wchar.h>
+#include "../utils/chessBoard/main.h"
 
 #define COLOR_DELTA 6
 #define N 8 
@@ -21,6 +22,9 @@ typedef struct Point {
 
 typedef wchar_t** ChessBoard;
 
+const char txtArchive[30] = "static/chessBoardGames.txt";
+const char binArchive[30] = "static/chessBoardArchive.dat";
+
 const time_t getCurrentDateTime(bool isStartTime);
 
 short shortReader(short integer, wchar_t* prompt);
@@ -33,5 +37,12 @@ const double dabs(double value); // abs function for double type values
 
 void sound(unsigned short times);
 
+void saveChessBoard(ChessBoard chessBoard);
+
+void saveChessBoardGames(unsigned short winner, unsigned short movesCounter);
+
+void readChessBoardArchive();
+
+void readChessBoardGames();
 
 #endif

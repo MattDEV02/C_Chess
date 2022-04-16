@@ -65,7 +65,7 @@ void printIconStringName(wchar_t icon) {
     }
 }
 
-void pawnTransition(ChessBoard chessBoard, Point *p, bool isBlack) {
+void pawnTransition(ChessBoard chessBoard, Point* p, bool isBlack) {
 	short pawnChoice = 0;
 	sound(6);
 	wprintf(L"\nScegli in cosa vuoi trasformare il pedone: \n");

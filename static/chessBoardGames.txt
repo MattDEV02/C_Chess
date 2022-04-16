@@ -1,0 +1,2 @@
+Winner: player number 2 (black) with 6 moves.
+Winner: player number 1 (white) with 5 moves.
