@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 const time_t getCurrentDateTime(bool isStartTime) {
 	const size_t bufferDim = 30;
 	char dateTimeStringBuffer[bufferDim];
@@ -45,13 +44,13 @@ void sound(unsigned short times) {
 }
 
 void saveChessBoard(ChessBoard chessBoard) {
-	FILE *fp = fopen(binArchive, "ab");
+	FILE *fp = fopen("static/chessBoardArchive.dat", "ab");
 	fwrite(chessBoard, sizeof(chessBoard), 1, fp);
 	fclose(fp);
 }
 
 void saveChessBoardGames(unsigned short winner, unsigned short movesCounter) {
-	FILE *fp = fopen(txtArchive, "a");
+	FILE *fp = fopen("static/chessBoardGames.txt", "a");
 	fprintf(
 		fp,
 		"Winner: player number %i (%ls) with %i moves.\n",
@@ -62,28 +61,28 @@ void saveChessBoardGames(unsigned short winner, unsigned short movesCounter) {
 }
 
 void readChessBoardArchive() {
-	FILE *fp = fopen(binArchive, "rb");
+	FILE *fp = fopen("static/chessBoardArchive.dat", "rb");
 	if (fp != NULL) {
 		unsigned short i = 0;
 		wchar_t row[N];
 		ChessBoard chessBoard;
 		for (i = 0; i < N; i++) {
-			while(fgetws(row, N * N, fp)) {
-                
-            }
+			while (fgetws(row, N * N, fp)) {
+			}
 		}
 		fclose(fp);
-		printChessBoard(chessBoard);
+		//printChessBoard(chessBoard);
 	}
 }
 
 void readChessBoardGames() {
 	const int rowDim = 50;
-	FILE *fp = fopen(txtArchive, "r");
+	FILE *fp = fopen("static/chessBoardGames.txt", "r");
 	if (fp != NULL) {
-        wprintf(L"History archive: \n \n");
+		wprintf(L"Games history archive: \n \n");
 		char row[rowDim];
 		while (fgets(row, rowDim, fp))
 			wprintf(L"%s\n", row);
+        wprintf(L"\n");
 	}
 }
