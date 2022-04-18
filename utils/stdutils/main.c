@@ -1,4 +1,6 @@
 #include "main.h"
+#include "../chessboard/main.h"
+
 
 const time_t getCurrentDateTime(bool isStartTime) {
 	const size_t bufferDim = 30;
@@ -43,14 +45,31 @@ void sound(unsigned short times) {
 		system("tput bel");
 }
 
+char txtFname[] = "static/chessBoardGames.txt";
+
+char binFname[] = "static/chessBoardArchive.dat";
+
+unsigned int getFileDim() {
+	int rowNum = 0;
+	FILE* fp = fopen(txtFname, "r");
+	if(fp != NULL) {
+		const unsigned short rowDim = 50;
+		char row[rowDim];
+		while(fgets(row, rowDim, fp)) 
+		rowNum++;
+	}
+	fclose(fp);
+	return rowNum;
+}
+
 void saveChessBoard(ChessBoard chessBoard) {
 	FILE *fp = fopen("static/chessBoardArchive.dat", "ab");
-	fwrite(chessBoard, sizeof(chessBoard), 1, fp);
+	fwrite(chessBoard, sizeof(ChessBoard), 1, fp);
 	fclose(fp);
 }
 
 void saveChessBoardGames(unsigned short winner, unsigned short movesCounter) {
-	FILE *fp = fopen("static/chessBoardGames.txt", "a");
+	FILE *fp = fopen(txtFname, "a");
 	fprintf(
 		fp,
 		"Winner: player number %i (%ls) with %i moves.\n",
@@ -61,28 +80,27 @@ void saveChessBoardGames(unsigned short winner, unsigned short movesCounter) {
 }
 
 void readChessBoardArchive() {
-	FILE *fp = fopen("static/chessBoardArchive.dat", "rb");
+	FILE *fp = fopen(binFname, "rb");
 	if (fp != NULL) {
 		unsigned short i = 0;
-		wchar_t row[N];
-		ChessBoard chessBoard;
-		for (i = 0; i < N; i++) {
-			while (fgetws(row, N * N, fp)) {
-			}
+		const int rowNum = getFileDim();
+		wchar_t chessBoard[N][N];
+		for(i = 0; i < rowNum; i++) {
+			fread(chessBoard, sizeof(wchar_t [N][N]), 1, fp);
+			printChessBoardN(chessBoard);
 		}
-		fclose(fp);
-		//printChessBoard(chessBoard);
 	}
+	fclose(fp);
 }
 
 void readChessBoardGames() {
 	const int rowDim = 50;
-	FILE *fp = fopen("static/chessBoardGames.txt", "r");
+	FILE *fp = fopen(txtFname, "r");
 	if (fp != NULL) {
-		wprintf(L"Games history archive: \n \n");
+		wprintf(L"%d Games history archive: \n \n", getFileDim());
 		char row[rowDim];
 		while (fgets(row, rowDim, fp))
 			wprintf(L"%s\n", row);
-        wprintf(L"\n");
 	}
+	fclose(fp);
 }

@@ -57,6 +57,7 @@
 #include "utils/stdutils/main.h"
 #include <locale.h>
 
+
 int main(void) {
 	setlocale(LC_ALL, "");
 	bool hasWin = false, badMove = false;
@@ -141,6 +142,6 @@ int main(void) {
     saveChessBoard(chessBoard);
     saveChessBoardGames(winner, movesCounter);
     readChessBoardGames();
-    //readChessBoardArchive();
+    readChessBoardArchive();
 	return EXIT_SUCCESS;
 }

@@ -14,6 +14,8 @@ void printChessBoardRow(bool isUp);
 
 void printChessBoard(ChessBoard chessBoard);
 
+void printChessBoardN(wchar_t chessBoard[N][N]);
+
 ChessBoard chessBoardCalloc();
 
 void chessBoardDealloc(ChessBoard chessBoard);
