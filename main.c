@@ -130,18 +130,18 @@ int main(void) {
 		remainingIcons = countBlackIcons(chessBoard);
 	else if (winner == 2)
 		remainingIcons = countWhiteIcons(chessBoard);
-	chessBoardDealloc(chessBoard);
 	wprintf(
 		L"\nMosse totali per secondo: %g (%g secondi = %g minuti) ; %g %c "
 		L"pedine avversarie mangiate.\n \n \n",
-		secondsTimeDiff / movesCounter,
+		movesCounter / secondsTimeDiff,
 		secondsTimeDiff,
 		secondsTimeDiff / 60,
 		iconPercentage(remainingIcons),
 		37);
-    saveChessBoard(chessBoard);
     saveChessBoardGames(winner, movesCounter);
     readChessBoardGames();
+	saveChessBoard(chessBoard);
     readChessBoardArchive();
+	chessBoardDealloc(chessBoard);
 	return EXIT_SUCCESS;
 }

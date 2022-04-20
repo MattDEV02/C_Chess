@@ -34,6 +34,12 @@ const double dabs(double value); // abs function for double type values
 
 void sound(unsigned short times);
 
+void printChessBoardRow(bool isUp);
+
+void printChessBoard(ChessBoard chessBoard);
+
+void printChessBoardN(wchar_t chessBoard[N][N]);
+
 unsigned int getFileDim();
 
 void saveChessBoard(ChessBoard chessBoard);
@@ -43,5 +49,6 @@ void saveChessBoardGames(unsigned short winner, unsigned short movesCounter);
 void readChessBoardArchive();
 
 void readChessBoardGames();
+
 
 #endif

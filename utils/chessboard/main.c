@@ -1,56 +1,6 @@
 #include "main.h"
 
 
-void printChessBoardRow(bool isUp) {
-    unsigned short i = 0;
-    isUp ? wprintf(L"\n \n \t   ") : wprintf(L"\n \t   ");
-    for (; i < N; i++)
-        wprintf(L" %i ", i);
-    wprintf(L"\n");
-}
-
-void printChessBoard(ChessBoard chessBoard) {
-    unsigned short
-        i = 0,
-        j = 0;
-    printChessBoardRow(true);
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            if (j == 0)
-                wprintf(L"\t%i | %lc ", i, chessBoard[i][j]);
-            else if (j == N - 1)
-                wprintf(L" %lc | %i", chessBoard[i][j], i);
-            else
-                wprintf(L" %lc ", chessBoard[i][j]);
-            if (j == N - 1 && i < N - 1)
-                wprintf(L"\n");
-        }
-    }
-    printChessBoardRow(false);
-    wprintf(L"\n");
-}
-
-void printChessBoardN(wchar_t chessBoard[N][N]) {
-	unsigned short
-        i = 0,
-        j = 0;
-    printChessBoardRow(true);
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            if (j == 0)
-                wprintf(L"\t%i | %lc ", i, chessBoard[i][j]);
-            else if (j == N - 1)
-                wprintf(L" %lc | %i", chessBoard[i][j], i);
-            else
-                wprintf(L" %lc ", chessBoard[i][j]);
-            if (j == N - 1 && i < N - 1)
-                wprintf(L"\n");
-        }
-    }
-    printChessBoardRow(false);
-    wprintf(L"\n");
-}
-
 ChessBoard chessBoardCalloc() {
 	ChessBoard chessBoard = calloc(N, sizeof(wchar_t*));
 	if(chessBoard != NULL) {
