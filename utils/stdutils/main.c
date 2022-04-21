@@ -128,13 +128,21 @@ void saveChessBoard(ChessBoard chessBoard) {
 
 void saveChessBoardGames(unsigned short winner, unsigned short movesCounter) {
 	FILE *fp = fopen(txtFname, "a");
+	time_t t = time(NULL);
+  	struct tm tm = *localtime(&t);
 	fprintf(
 		fp,
-		"Winner: player number %i (%ls) with %i moves (%s).\n",
+		"Winner: player number %i (%ls) with %i moves (%d-%02d-%02d %02d:%02d:%02d).\n",
 		winner,
 		winner == 1 ? L"white" : L"black",
 		movesCounter,
-		"");
+		tm.tm_mday, 
+		tm.tm_mon + 1,
+		tm.tm_year + 1900, 
+		tm.tm_hour + 2, 
+		tm.tm_min, 
+		tm.tm_sec
+	);
 	fclose(fp);
 }
 
