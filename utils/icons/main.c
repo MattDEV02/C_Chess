@@ -54,9 +54,9 @@ void printIconStringName(wchar_t icon) {
     else if(isTower(icon))
         wprintf(L"icon name = Tower.\n");
     else if(isKing(icon))
-        wprintf(L"icon name = King.\n");
-    else if(isQueen(icon))
         wprintf(L"icon name = Queen.\n");
+    else if(isQueen(icon))
+        wprintf(L"icon name = King.\n");
     else if(isFreePosition(icon))
         wprintf(L"icon name = Empty pos.\n");
     else {

@@ -6,7 +6,7 @@ const time_t getCurrentDateTime(bool isStartTime) {
 	char dateTimeStringBuffer[bufferDim];
 	const time_t now = time(NULL);
 	struct tm *restrict time_info = localtime(&(now));
-	time_info->tm_hour += 1;
+	time_info->tm_hour += 2;
 	strftime(dateTimeStringBuffer, bufferDim, "%Y-%m-%d %H:%M:%S", time_info);
 	wprintf(
 		L"\nGame %ls time = %s\n",
@@ -100,71 +100,78 @@ void printChessBoardN(wchar_t chessBoard[N][N]) {
 
 
 unsigned int getFileDim() {
-	int rowNum = 0;
+	unsigned int rowNum = 0;
 	FILE* fp = fopen(txtFname, "r");
 	if(fp != NULL) {
-		const unsigned short rowDim = 50;
-		char row[rowDim];
-		while(fgets(row, rowDim, fp)) 
-		rowNum++;
-	}
+		char row[70];
+		while(fgets(row, sizeof(row), fp) ) 
+			rowNum++;
+	} 
 	fclose(fp);
-	return rowNum;
+	return rowNum / 1;
 }
 
 void saveChessBoard(ChessBoard chessBoard) { 
 	FILE *fp = fopen(binFname, "ab");
-    unsigned short 
+	if(fp != NULL) {
+		unsigned short 
 		i = 0, 
 		j = 0;
-	wchar_t temp[N][N];
-	for(i = 0; i < N; i++) {
-		for(j = 0; j < N; j++) 
-			temp[i][j] = chessBoard[i][j];
+		wchar_t temp[N][N];
+		for(i = 0; i < N; i++) {
+			for(j = 0; j < N; j++) 
+				temp[i][j] = chessBoard[i][j];
+		}
+		fwrite(temp, sizeof(wchar_t [N][N]), 1, fp);	
 	}
-	fwrite(temp, sizeof(wchar_t [N][N]), 1, fp);
 	fclose(fp);
 }
 
 void saveChessBoardGames(unsigned short winner, unsigned short movesCounter) {
 	FILE *fp = fopen(txtFname, "a");
-	time_t t = time(NULL);
-  	struct tm tm = *localtime(&t);
-	fprintf(
-		fp,
-		"Winner: player number %i (%ls) with %i moves (%d-%02d-%02d %02d:%02d:%02d).\n",
-		winner,
-		winner == 1 ? L"white" : L"black",
-		movesCounter,
-		tm.tm_mday, 
-		tm.tm_mon + 1,
-		tm.tm_year + 1900, 
-		tm.tm_hour + 2, 
-		tm.tm_min, 
-		tm.tm_sec
-	);
-	fclose(fp);
+	if(fp != NULL) {
+		time_t t = time(NULL);
+  		struct tm tm = *localtime(&t);
+		fprintf(
+			fp,
+			"Winner: player number %i (%ls) with %i moves (%d-%02d-%02d %02d:%02d:%02d).\n",
+			winner,
+			winner == 1 ? L"white" : L"black",
+			movesCounter,
+			tm.tm_mday, 
+			tm.tm_mon + 1,
+			tm.tm_year + 1900, 
+			tm.tm_hour + 2, 
+			tm.tm_min, 
+			tm.tm_sec
+		);
+		fclose(fp);	
+	}
 }
 
 void readChessBoardArchive() {
 	FILE *fp = fopen(binFname, "rb");
 	if (fp != NULL) {
+		unsigned int i = 1;
 		wchar_t temp[N][N];
-		while(fread(temp, sizeof(wchar_t [N][N]), 1, fp) > 0)
+		while(fread(temp, sizeof(wchar_t [N][N]), 1, fp) > 0) {
+			wprintf(L"%d )", i);
 			printChessBoardN(temp);
+			i++;
+		}
 	}
 	fclose(fp);
     wprintf(L"\n");
 }
 
 void readChessBoardGames() {
-	const int rowDim = 70; // single row dimension (in chars)
 	FILE *fp = fopen(txtFname, "r");
 	if (fp != NULL) {
-		wprintf(L"%d games history archive: \n \n", getFileDim());
-		char row[rowDim];
-		while (fgets(row, rowDim, fp))
+		wprintf(L"%d games in the historical archive: \n \n", getFileDim());
+		char row[70];
+		while (fgets(row, sizeof(row), fp))
 			wprintf(L"%s\n", row);
 	}
+	wprintf(L"\n");
 	fclose(fp);
 }

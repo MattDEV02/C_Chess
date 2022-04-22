@@ -133,7 +133,7 @@ int main(void) {
 	wprintf(
 		L"\nMosse totali per secondo: %g (%g secondi = %g minuti) ; %g %c "
 		L"pedine avversarie mangiate.\n \n \n",
-		movesCounter / secondsTimeDiff,
+		secondsTimeDiff / movesCounter,
 		secondsTimeDiff,
 		secondsTimeDiff / 60,
 		iconPercentage(remainingIcons),
