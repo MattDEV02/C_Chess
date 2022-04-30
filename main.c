@@ -97,17 +97,32 @@ int main(void) {
 			} else if (isFreePosition(chessBoard[row1][col1])) {
 				badMove = true;
 				wprintf(L"\nPosizione vuota, riprova.\n");
-			} else
-				badMove = false;
+			} else {
+				p1.row = row1;
+				p1.col = col1;
+				if(isPawn(chessBoard[p1.row][p1.col])) {
+					badMove = !dispPawnMovements(chessBoard, &p1);
+				} else if(isHorse(chessBoard[row1][col1])) {
+					badMove = !dispHorseMovements(chessBoard, &p1);
+				} else if(isBishop(chessBoard[row1][col1])) {
+					badMove = !dispBishopMovements(chessBoard, &p1);
+				} else if(isTower(chessBoard[row1][col1])) {
+					badMove = !dispTowerMovements(chessBoard, &p1);
+					//wprintf(L"\nMosse torre %ls non disponibili, cambia pedina.\n", player == 0 ? L"bianco/a" : L"nero/a");
+				} else if(isKing(chessBoard[row1][col1])) {
+					badMove = !dispKingMovements(chessBoard, &p1);
+				} else if(isQueen(chessBoard[row1][col1])) {
+					badMove = !dispQueenMovements(chessBoard, &p1);
+				} else
+					badMove = false;
+			}
 		} while (badMove);
-		p1.row = row1;
-		p1.col = col1;
 		wprintf(
 			L"\nPosizione di partenza: %lc ; colore: %ls ; (%i, %i) ; ",
 			chessBoard[row1][col1],
 			isBlack(chessBoard[row1][col1]) ? L"nero" : L"bianco",
-			row1,
-			col1);
+			p1.row,
+			p1.col);
 		printIconStringName(chessBoard[row1][col1]);
 		hasWin = playerTurn(chessBoard, &(p1));
 		winner = player + 1;

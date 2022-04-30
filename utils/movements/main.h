@@ -35,5 +35,17 @@ bool isCastlingMovement(ChessBoard chessBoard, Point* p1, Point* p2);
 
 void castling(ChessBoard chessBoard, Point* p1, Point* p2);
 
+bool dispPawnMovements(ChessBoard chessBoard, Point* p1); // disponible
+
+bool dispHorseMovements(ChessBoard chessBoard, Point* p1);
+
+bool dispBishopMovements(ChessBoard chessBoard, Point* p1);
+
+bool dispTowerMovements(ChessBoard chessBoard, Point* p1);
+
+bool dispKingMovements(ChessBoard chessBoard, Point* p1);
+
+bool dispQueenMovements(ChessBoard chessBoard, Point* p1);
+
 
 #endif
