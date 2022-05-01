@@ -101,20 +101,21 @@ int main(void) {
 				p1.row = row1;
 				p1.col = col1;
 				if(isPawn(chessBoard[p1.row][p1.col])) {
-					badMove = !dispPawnMovements(chessBoard, &p1);
+					badMove = dispPawnMovements(chessBoard, &p1);
 				} else if(isHorse(chessBoard[row1][col1])) {
-					badMove = !dispHorseMovements(chessBoard, &p1);
+					badMove = dispHorseMovements(chessBoard, &p1);
 				} else if(isBishop(chessBoard[row1][col1])) {
-					badMove = !dispBishopMovements(chessBoard, &p1);
+					badMove = dispBishopMovements(chessBoard, &p1);
 				} else if(isTower(chessBoard[row1][col1])) {
-					badMove = !dispTowerMovements(chessBoard, &p1);
-					//wprintf(L"\nMosse torre %ls non disponibili, cambia pedina.\n", player == 0 ? L"bianco/a" : L"nero/a");
+					badMove = dispTowerMovements(chessBoard, &p1);
 				} else if(isKing(chessBoard[row1][col1])) {
-					badMove = !dispKingMovements(chessBoard, &p1);
+					badMove = dispKingMovements(chessBoard, &p1);
 				} else if(isQueen(chessBoard[row1][col1])) {
-					badMove = !dispQueenMovements(chessBoard, &p1);
+					badMove = dispQueenMovements(chessBoard, &p1);
 				} else
 					badMove = false;
+				if(badMove)
+					wprintf(L"\nMosse pedina %ls non disponibili, cambia pedina.\n", player == 0 ? L"bianca" : L"nera");
 			}
 		} while (badMove);
 		wprintf(
