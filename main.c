@@ -101,7 +101,7 @@ int main(void) {
 				p1.row = row1;
 				p1.col = col1;
 				if(isPawn(chessBoard[p1.row][p1.col])) {
-					badMove = dispPawnMovements(chessBoard, &p1);
+					badMove = dispPawnMovements(chessBoard, &p1, player == 0);
 				} else if(isHorse(chessBoard[row1][col1])) {
 					badMove = dispHorseMovements(chessBoard, &p1);
 				} else if(isBishop(chessBoard[row1][col1])) {

@@ -140,8 +140,37 @@ void castling(ChessBoard chessBoard, Point* p1, Point* p2) {
 	defineSquare(chessBoard, &(towerPoint));
 }
 
-bool dispPawnMovements(ChessBoard chessBoard, Point* p1) {
-	return false;
+bool dispPawnMovements(ChessBoard chessBoard, Point* p1, bool isWhite) {
+	bool disp = false; 
+	const wchar_t start = chessBoard[p1->row][p1->col];
+	if(isWhite) {
+		if(
+			(p1->row >= (N -1) || p1->col <= 0) ||
+			(!isFreePosition(chessBoard[p1->row + 1][p1->col - 1]) && !isFreePosition(chessBoard[p1->row + 1][p1->col + 2]))
+		) {
+			disp = (
+				isEqualColor(start, chessBoard[p1->row + 1][p1->col - 1]) &&
+				isEqualColor(start, chessBoard[p1->row + 1][p1->col + 2]) &&
+				(!isFreePosition(chessBoard[p1->row + 1][p1->col]))
+			);
+		} else {
+			disp = (!isFreePosition(chessBoard[p1->row + 1][p1->col]));
+		}
+	} else {
+		if(
+			(p1->row <= 0 || p1->col >= (N - 1)) ||
+			(!isFreePosition(chessBoard[p1->row - 1][p1->col + 1]) && !isFreePosition(chessBoard[p1->row - 1][p1->col + 2]))
+		) {
+			disp = (
+				isEqualColor(start, chessBoard[p1->row - 1][p1->col + 1]) &&
+				isEqualColor(start, chessBoard[p1->row - 1][p1->col + 2]) &&
+				(!isFreePosition(chessBoard[p1->row - 1][p1->col]))
+			);
+		} else {
+			disp = (!isFreePosition(chessBoard[p1->row - 1][p1->col]));
+		}
+	}
+	return disp;
 }
 
 bool dispHorseMovements(ChessBoard chessBoard, Point* p1) {
