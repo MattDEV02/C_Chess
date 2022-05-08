@@ -86,14 +86,15 @@ bool isKingMovement(Point* p1, Point* p2) {
 }
 
 bool isQueenMovement(Point* p1, Point* p2) {
-    return (
+    return ( // (0, 4) ==> (3, 1)
+		((abs(p1->row - p2->row) == 1) || (abs(p1->col - p2->col) == 1)) && (
         (p1->row == p2->row - 1 && p1->col == p2->col) ||
         (p1->row == p2->row + 1 && p1->col == p2->col) ||
         (p1->row == p2->row && p1->col == p2->col - 1) ||
         (p1->row == p2->row && p1->col == p2->col + 1) ||
         (p1->row + p1->col - 2 == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col) ||
         (p1->row + p1->col + 2 == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col) ||
-        (p1->row + p1->col == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col)
+        (p1->row + p1->col == p2->row + p2->col && p1->row != p2->row && p1->col != p2->col))
 	);
 }
 
@@ -117,14 +118,15 @@ bool move(ChessBoard chessBoard, Point* p1, Point* p2) {
 }
 
 bool isCastlingMovement(ChessBoard chessBoard, Point* p1, Point* p2) {
-	return 
+	return (
 		isQueen(chessBoard[p1->row][p1->col]) &&
 		(p1->row == p2->row && (p1->row == 0 || p1->row == 7)) &&
 		(p1->col == 4 && p2->col == 6) &&
 		isFreePosition(chessBoard[p1->row][p1->col + 1]) &&
 		isFreePosition(chessBoard[p2->row][p2->col]) &&
 		isTower(chessBoard[p2->row][p2->col + 1]) &&
-		isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2->row][p2->col + 1]);
+		isEqualColor(chessBoard[p1->row][p1->col], chessBoard[p2->row][p2->col + 1])
+	);
 }
 
 void castling(ChessBoard chessBoard, Point* p1, Point* p2) {
