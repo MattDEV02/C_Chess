@@ -16,12 +16,10 @@
    operating systems.", "license": "ISC", "dependencies": {
 		},
 		"scripts": {
-			"build": "gcc main.c utils/stdutils/main.c utils/positions/main.c
-   utils/icons/main.c utils/movements/main.c utils/chessboard/main.c -o main",
-			"build2": "clang-7 -pthread -lm -o main main.c utils/stdutils/main.c
-   utils/positions/main.c utils/icons/main.c utils/movements/main.c
-   utils/chessboard/main.c", "exec": "./main", "start": "gcc main.c
+			"build": "./run.sh", "build2": "clang-7 -pthread -lm -o main main.c
    utils/stdutils/main.c utils/positions/main.c utils/icons/main.c
+   utils/movements/main.c utils/chessboard/main.c", "exec": "./main", "start":
+   "gcc main.c utils/stdutils/main.c utils/positions/main.c utils/icons/main.c
    utils/movements/main.c utils/chessboard/main.c -o main && ./main"
 		},
 		"keywords": [
@@ -57,7 +55,6 @@
 #include "utils/positions/main.h"
 #include "utils/stdutils/main.h"
 #include <locale.h>
-
 
 int main(void) {
 	setlocale(LC_ALL, "");
@@ -101,22 +98,24 @@ int main(void) {
 			} else {
 				p1.row = row1;
 				p1.col = col1;
-				if(isPawn(chessBoard[p1.row][p1.col])) {
+				if (isPawn(chessBoard[p1.row][p1.col])) {
 					badMove = dispPawnMovements(chessBoard, &(p1), player == 0);
-				} else if(isHorse(chessBoard[row1][col1])) {
+				} else if (isHorse(chessBoard[row1][col1])) {
 					badMove = dispHorseMovements(chessBoard, &(p1));
-				} else if(isBishop(chessBoard[row1][col1])) {
+				} else if (isBishop(chessBoard[row1][col1])) {
 					badMove = dispBishopMovements(chessBoard, &(p1));
-				} else if(isTower(chessBoard[row1][col1])) {
+				} else if (isTower(chessBoard[row1][col1])) {
 					badMove = dispTowerMovements(chessBoard, &(p1));
-				} else if(isKing(chessBoard[row1][col1])) {
+				} else if (isKing(chessBoard[row1][col1])) {
 					badMove = dispKingMovements(chessBoard, &(p1));
-				} else if(isQueen(chessBoard[row1][col1])) {
+				} else if (isQueen(chessBoard[row1][col1])) {
 					badMove = dispQueenMovements(chessBoard, &(p1));
 				} else
 					badMove = false;
-				if(badMove)
-					wprintf(L"\nMosse pedina %ls non disponibili, cambia pedina.\n", player == 0 ? L"bianca" : L"nera");
+				if (badMove)
+					wprintf(
+						L"\nMosse pedina %ls non disponibili, cambia pedina.\n",
+						player == 0 ? L"bianca" : L"nera");
 			}
 		} while (badMove);
 		wprintf(
@@ -155,10 +154,10 @@ int main(void) {
 		secondsTimeDiff / 60,
 		iconPercentage(remainingIcons),
 		37);
-    saveChessBoardGames(winner, movesCounter);
-    readChessBoardGames();
+	saveChessBoardGames(winner, movesCounter);
+	readChessBoardGames();
 	saveChessBoard(chessBoard);
-    readChessBoardArchive();
+	readChessBoardArchive();
 	chessBoardDealloc(chessBoard);
 	return EXIT_SUCCESS;
 }
